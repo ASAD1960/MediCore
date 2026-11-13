@@ -1,0 +1,71 @@
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+**/build/
+**/.next/
+**/coverage/
+**/.vite/
+**/.turbo/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs
+*.log
+logs/
+
+# Local databases and temporary data
+*.sqlite
+*.sqlite3
+*.db-journal
+tmp/
+temp/
+
+# Backups
+/backups/
+**/backups/
+
+# Operating system
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test and tooling output
+playwright-report/
+test-results/
+.nyc_output/
+
+# Deployment and local platform files
+.vercel/
+.netlify/
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+# Generated TypeScript metadata
+*.tsbuildinfo
+
+# Editor and temporary backups
+*.bak
+*.backup
+*.tmp
+
+# Local environment overrides
+.env.local
+.env.*.local
+
+# Temporary Git preparation backups
+*.precommit-backup_*
