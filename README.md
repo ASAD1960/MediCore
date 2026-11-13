@@ -1162,7 +1162,7 @@ PostgreSQL must be installed and running before the backend can connect to the d
 ## Step 1: Clone the repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone https://github.com/ASAD1960/MediCore.git
 cd Medicore
 ```
 
