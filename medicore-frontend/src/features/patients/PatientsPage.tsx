@@ -123,9 +123,21 @@ function initials(firstName: string, lastName: string) {
 }
 
 function formatDate(value?: string) {
-  if (!value) return '—';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return '—';
+  if (!value) return 'â€”';
+
+  // Treat date-only values as calendar dates, not UTC timestamps.
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
+
+  const date = dateOnly
+    ? new Date(
+        Number(dateOnly[1]),
+        Number(dateOnly[2]) - 1,
+        Number(dateOnly[3]),
+      )
+    : new Date(value);
+
+  if (Number.isNaN(date.getTime())) return 'â€”';
+
   return date.toLocaleDateString(undefined, {
     day: 'numeric',
     month: 'short',
@@ -141,7 +153,7 @@ function toDateInput(value?: string) {
 function StatusBadge({ status }: { status: string }) {
   const active = status === 'ACTIVE';
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.08em] ${
+    <span className={`mc-status-badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.08em] ${
       active
         ? 'border-emerald-200/80 bg-emerald-50 text-emerald-800'
         : 'border-slate-200 bg-slate-100 text-slate-600'
@@ -324,7 +336,7 @@ export default function PatientsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="patients-page space-y-6">
       <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div className="min-w-0">
           <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-[#347e72]">
@@ -361,8 +373,8 @@ export default function PatientsPage() {
         )}
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-3">
-        <div className="relative overflow-hidden rounded-xl border border-[#dce8e4] bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
+      <section className="patients-overview grid gap-3 sm:grid-cols-3">
+        <div className="patients-overview-card relative overflow-hidden rounded-xl border border-[#dce8e4] bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
           <div className="flex items-center justify-between">
             <p className="text-[10px] font-bold uppercase tracking-[.12em] text-slate-500">Total patient records</p>
             <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#edf5f2] text-[#347e72]">
@@ -380,7 +392,7 @@ export default function PatientsPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
+        <div className="patients-overview-card rounded-xl border border-slate-200/80 bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
           <div className="flex items-center justify-between">
             <p className="text-[10px] font-bold uppercase tracking-[.12em] text-slate-500">Directory view</p>
             <span className="grid h-9 w-9 place-items-center rounded-lg bg-slate-100 text-slate-600">
@@ -393,7 +405,7 @@ export default function PatientsPage() {
           <p className="mt-1 text-[10px] text-slate-400">Current status selection</p>
         </div>
 
-        <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
+        <div className="patients-overview-card rounded-xl border border-slate-200/80 bg-white p-4 shadow-[0_2px_10px_rgba(20,45,40,.025)]">
           <div className="flex items-center justify-between">
             <p className="text-[10px] font-bold uppercase tracking-[.12em] text-slate-500">Visible records</p>
             <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#f2f4f7] text-slate-600">
@@ -408,7 +420,7 @@ export default function PatientsPage() {
       </section>
 
       {showForm && can('patients.create') && (
-        <section className="overflow-hidden rounded-xl border border-[#dce8e4] bg-white shadow-[0_8px_30px_rgba(20,45,40,.045)]">
+        <section className="patients-registration overflow-hidden rounded-xl border border-[#dce8e4] bg-white shadow-[0_8px_30px_rgba(20,45,40,.045)]">
           <div className="flex items-center justify-between gap-4 border-b border-[#e7eeeb] bg-[#f6faf8] px-5 py-4 sm:px-6">
             <div>
               <div className="flex items-center gap-2">
@@ -517,7 +529,7 @@ export default function PatientsPage() {
         </section>
       )}
 
-      <section className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_3px_14px_rgba(20,45,40,.025)]">
+      <section className="patients-directory overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_3px_14px_rgba(20,45,40,.025)]">
         <div className="flex flex-col justify-between gap-4 border-b border-slate-100 px-5 py-5 lg:flex-row lg:items-center lg:px-6">
           <div>
             <div className="flex items-center gap-2">
@@ -624,7 +636,7 @@ export default function PatientsPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            <div className="patients-table-wrap overflow-x-auto">
               <table className="w-full min-w-[780px] text-left">
                 <thead className="border-b border-slate-100 bg-[#f8faf9]">
                   <tr className="text-[9px] font-bold uppercase tracking-[.12em] text-slate-400">
@@ -714,11 +726,11 @@ export default function PatientsPage() {
 
       {selectedId && (
         <div
-          className="fixed inset-0 z-[70] flex justify-end bg-[#10231f]/45 backdrop-blur-[3px]"
+          className="patients-detail-backdrop fixed inset-0 z-[70] flex justify-end bg-[#10231f]/45 backdrop-blur-[3px]"
           role="presentation"
           onMouseDown={(event) => { if (event.target === event.currentTarget) closeDetails(); }}
         >
-          <section className="flex h-full w-full max-w-[540px] flex-col overflow-hidden border-l border-white/20 bg-white shadow-2xl" role="dialog" aria-modal="true" aria-label="Patient record">
+          <section className="patients-detail-panel flex h-full w-full max-w-[540px] flex-col overflow-hidden border-l border-white/20 bg-white shadow-2xl" role="dialog" aria-modal="true" aria-label="Patient record">
             <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 sm:px-6">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#347e72]">Patient registry</p>

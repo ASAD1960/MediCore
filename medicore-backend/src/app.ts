@@ -53,3 +53,6 @@ app.use((_req, res) =>
 );
 
 app.use(errorHandler);
+
+// Vercel Express entry point
+export default app;

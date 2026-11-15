@@ -188,7 +188,7 @@ function StatusBadge({ status }: { status: DoctorStatus }) {
   };
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wide ${styles[status]}`}>
+    <span className={`mc-status-badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wide ${styles[status]}`}>
       <span className="h-1.5 w-1.5 rounded-full bg-current" />
       {labels[status]}
     </span>
@@ -481,7 +481,7 @@ export default function DoctorsPage() {
       : `${statusFilter.toLowerCase()} medical professionals`;
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="doctors-enterprise space-y-6 pb-8">
       <header className="flex flex-col justify-between gap-4 border-b border-[#e6ece8] pb-5 sm:flex-row sm:items-end">
         <div>
           <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-[#347762]">

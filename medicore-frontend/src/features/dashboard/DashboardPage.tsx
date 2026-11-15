@@ -205,8 +205,110 @@ function StatusBadge({ value }: { value: string }) {
   );
 }
 
-function formatTime(value: string) {
-  return new Date(value).toLocaleTimeString([], {
+// MEDICORE ORGANIZATION TIMEZONE FIX
+function getZonedDateTimeParts(date: Date, timeZone: string) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date);
+
+  const get = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value);
+
+  return {
+    year: get('year'),
+    month: get('month'),
+    day: get('day'),
+    hour: get('hour'),
+    minute: get('minute'),
+    second: get('second'),
+  };
+}
+
+function localDateTimeToUtc(
+  date: string,
+  time: string,
+  timeZone: string,
+): Date {
+  const [year, month, day] = date.split('-').map(Number);
+  const [hour, minute] = time.split(':').map(Number);
+
+  const target = Date.UTC(year, month - 1, day, hour, minute);
+  let candidate = target;
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const parts = getZonedDateTimeParts(new Date(candidate), timeZone);
+
+    const represented = Date.UTC(
+      parts.year,
+      parts.month - 1,
+      parts.day,
+      parts.hour,
+      parts.minute,
+      parts.second,
+    );
+
+    const difference = target - represented;
+
+    if (difference === 0) break;
+
+    candidate += difference;
+  }
+
+  const result = new Date(candidate);
+  const actual = getZonedDateTimeParts(result, timeZone);
+
+  if (
+    actual.year !== year ||
+    actual.month !== month ||
+    actual.day !== day ||
+    actual.hour !== hour ||
+    actual.minute !== minute
+  ) {
+    throw new Error(
+      `Unable to resolve local midnight for ${date} in ${timeZone}`,
+    );
+  }
+
+  return result;
+}
+
+function nextCalendarDate(date: string): string {
+  const [year, month, day] = date.split('-').map(Number);
+  const next = new Date(Date.UTC(year, month - 1, day + 1));
+
+  return [
+    next.getUTCFullYear(),
+    String(next.getUTCMonth() + 1).padStart(2, '0'),
+    String(next.getUTCDate()).padStart(2, '0'),
+  ].join('-');
+}
+
+function getOrganizationDayRange(timeZone: string) {
+  const parts = getZonedDateTimeParts(new Date(), timeZone);
+
+  const localDate = [
+    parts.year,
+    String(parts.month).padStart(2, '0'),
+    String(parts.day).padStart(2, '0'),
+  ].join('-');
+
+  const nextDate = nextCalendarDate(localDate);
+
+  return {
+    from: localDateTimeToUtc(localDate, '00:00', timeZone),
+    to: localDateTimeToUtc(nextDate, '00:00', timeZone),
+  };
+}
+function formatTime(value: string, timeZone: string) {
+  return new Date(value).toLocaleTimeString(undefined, {
+    timeZone,
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -304,20 +406,17 @@ function ActivityRow({
 
 export default function DashboardPage() {
   const { me, can } = useAuth();
+  const timeZone = me?.organization?.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   const canViewPatients = can('patients.view');
   const canViewDoctors = can('doctors.view');
   const canViewAppointments = can('appointments.view');
 
   const overview = useQuery({
-    queryKey: ['dashboard-overview', me?.organization?.id],
+    queryKey: ['dashboard-overview', me?.organization?.id, timeZone],
     enabled: Boolean(me),
     queryFn: async (): Promise<DashboardOverview> => {
-      const from = new Date();
-      from.setHours(0, 0, 0, 0);
-
-      const to = new Date(from);
-      to.setDate(to.getDate() + 1);
+      const { from, to } = getOrganizationDayRange(timeZone);
 
       const response = await api.get<{ data: DashboardOverview }>(
         '/dashboard/overview',
@@ -343,6 +442,7 @@ export default function DashboardPage() {
   const firstName = me?.name?.trim().split(/\s+/)[0] ?? 'there';
 
   const today = new Date().toLocaleDateString(undefined, {
+    timeZone,
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -634,11 +734,11 @@ export default function DashboardPage() {
                           >
                             <td className="whitespace-nowrap px-5 py-4 align-middle">
                               <p className="text-[11px] font-bold tabular-nums text-[#263943]">
-                                {formatTime(appointment.startTime)}
+                                {formatTime(appointment.startTime, timeZone)}
                               </p>
 
                               <p className="mt-1 text-[10px] tabular-nums text-slate-400">
-                                to {formatTime(appointment.endTime)}
+                                to {formatTime(appointment.endTime, timeZone)}
                               </p>
                             </td>
 

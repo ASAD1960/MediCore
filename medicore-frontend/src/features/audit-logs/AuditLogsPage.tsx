@@ -1,4 +1,4 @@
-﻿import { useDeferredValue, useMemo, useState } from 'react';
+import { useDeferredValue, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 
@@ -234,8 +234,8 @@ export default function AuditLogsPage() {
   const total = pagination?.total ?? 0;
 
   return (
-    <div className="space-y-6 pb-8">
-      <section className="relative overflow-hidden rounded-2xl bg-[#142d35] px-6 py-7 text-white shadow-lg shadow-slate-900/10 sm:px-8">
+    <div className="audit-enterprise space-y-6 pb-8">
+      <section className="audit-hero relative overflow-hidden rounded-2xl bg-[#142d35] px-6 py-7 text-white shadow-lg shadow-slate-900/10 sm:px-8">
         <div className="pointer-events-none absolute -right-12 -top-24 h-64 w-64 rounded-full border border-white/10" />
         <div className="pointer-events-none absolute -right-1 -top-12 h-44 w-44 rounded-full border border-white/10" />
 
@@ -266,14 +266,14 @@ export default function AuditLogsPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="audit-overview grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Metric label="Total organization events" value={total.toLocaleString()} detail="Records reported by the server" icon="activity" />
         <Metric label="Events on this page today" value={String(todayCount)} detail="Today's events in the loaded page" icon="clock" />
         <Metric label="Loaded records" value={String(records.length)} detail={`Page ${pagination?.page ?? page} of ${totalPages}`} icon="file" />
         <Metric label="Access mode" value="Read only" detail="No edit or delete operations" icon="shield" />
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-200/30">
+      <section className="audit-records-panel overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-200/30">
         <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div>
             <div className="flex items-center gap-2">
@@ -294,7 +294,7 @@ export default function AuditLogsPage() {
           </button>
         </div>
 
-        <div className="space-y-4 border-b border-slate-100 bg-slate-50/60 p-4 sm:p-5">
+        <div className="audit-filters space-y-4 border-b border-slate-100 bg-slate-50/60 p-4 sm:p-5">
           <div className="relative">
             <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
               <Icon name="search" size={17} />
@@ -391,12 +391,12 @@ export default function AuditLogsPage() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="audit-record-list divide-y divide-slate-100">
             {filtered.map((record) => {
               const expanded = expandedId === record.id;
 
               return (
-                <article key={record.id} className="transition hover:bg-slate-50/70">
+                <article key={record.id} className="audit-record transition hover:bg-slate-50/70">
                   <button
                     type="button"
                     onClick={() => setExpandedId(expanded ? null : record.id)}
@@ -460,7 +460,7 @@ export default function AuditLogsPage() {
                         <p className="mt-2 break-all text-[11px] leading-5 text-slate-600">{record.userAgent || 'Not recorded'}</p>
                       </div>
 
-                      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200/80 bg-[#172b33]">
+                      <div className="audit-metadata mt-4 overflow-hidden rounded-xl border border-slate-200/80 bg-[#172b33]">
                         <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
                           <Icon name="file" size={14} />
                           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-300">Event metadata</p>
@@ -475,7 +475,7 @@ export default function AuditLogsPage() {
           </div>
         )}
 
-        <div className="flex flex-col gap-3 border-t border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="audit-pagination flex flex-col gap-3 border-t border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p className="text-[11px] text-slate-500">
             {total === 0 ? 'No records' : `Page ${pagination?.page ?? page} of ${totalPages} · ${total.toLocaleString()} total records`}
           </p>
@@ -508,7 +508,7 @@ export default function AuditLogsPage() {
         </div>
       </section>
 
-      <div className="flex items-start gap-3 rounded-xl border border-amber-200/80 bg-amber-50/70 px-4 py-3">
+      <div className="audit-integrity-note flex items-start gap-3 rounded-xl border border-amber-200/80 bg-amber-50/70 px-4 py-3">
         <span className="mt-0.5 text-amber-700"><Icon name="lock" size={15} /></span>
         <p className="text-[11px] leading-5 text-amber-900">
           <strong>Audit integrity:</strong> This interface is intentionally read-only. Filters operate on the current page of records; use pagination to inspect older events. Access is enforced by the server through the audit.view permission.

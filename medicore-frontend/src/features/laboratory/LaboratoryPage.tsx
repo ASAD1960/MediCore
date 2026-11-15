@@ -127,7 +127,7 @@ function StatusBadge({ status }: { status: string }) {
   const label = status.replaceAll('_', ' ').toLowerCase();
 
   return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${styles[status] ?? styles.INACTIVE}`}>
+    <span className={`mc-status-badge inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${styles[status] ?? styles.INACTIVE}`}>
       {label}
     </span>
   );
@@ -448,7 +448,7 @@ export default function LaboratoryPage() {
   }
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="lab-enterprise space-y-6 pb-8">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-teal-700">
@@ -496,7 +496,7 @@ export default function LaboratoryPage() {
       )}
 
       {canViewOrders && (
-        <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+        <div className="lab-overview grid grid-cols-2 gap-3 xl:grid-cols-4">
           <Metric label="Orders loaded" value={metrics.total} detail="Current order list" />
           <Metric label="Awaiting samples" value={metrics.requested} detail="Requested orders" />
           <Metric label="In progress" value={metrics.processing} detail="Collected or processing" />
@@ -504,7 +504,7 @@ export default function LaboratoryPage() {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200">
+      <div className="lab-tabs flex flex-wrap items-center justify-between gap-3 border-b border-slate-200">
         <div className="flex gap-6">
           {canViewOrders && (
             <button
@@ -540,8 +540,8 @@ export default function LaboratoryPage() {
       </div>
 
       {activeTab === 'orders' && canViewOrders && (
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.78fr)]">
-          <section className="min-w-0 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+        <div className="lab-orders-layout grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.78fr)]">
+          <section className="lab-order-list min-w-0 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
             <div className="flex flex-col gap-3 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-sm font-bold text-slate-900">Diagnostic orders</h2>
@@ -622,7 +622,7 @@ export default function LaboratoryPage() {
             )}
           </section>
 
-          <section className="min-w-0 rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+          <section className="lab-order-detail min-w-0 rounded-2xl border border-slate-200/80 bg-white shadow-sm">
             {!selectedOrderId ? (
               <div className="flex min-h-[360px] flex-col items-center justify-center p-8 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-2xl text-teal-800">⌁</div>
@@ -808,7 +808,7 @@ export default function LaboratoryPage() {
       )}
 
       {activeTab === 'catalogue' && canViewTests && (
-        <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+        <section className="lab-catalogue overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-sm font-bold text-slate-900">Diagnostic test catalogue</h2>
@@ -874,8 +874,8 @@ export default function LaboratoryPage() {
       )}
 
       {showOrderForm && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-slate-950/45 p-3 sm:p-6" role="presentation">
-          <div role="dialog" aria-modal="true" aria-labelledby="new-lab-order-title" className="my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="lab-order-modal-backdrop fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-slate-950/45 p-3 sm:p-6" role="presentation">
+          <div role="dialog" aria-modal="true" aria-labelledby="new-lab-order-title" className="lab-order-modal my-auto w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
             <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">
               <div>
                 <h2 id="new-lab-order-title" className="text-base font-bold text-slate-900">Create laboratory order</h2>
@@ -962,8 +962,8 @@ export default function LaboratoryPage() {
       )}
 
       {showTestForm && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-slate-950/45 p-3 sm:p-6">
-          <div role="dialog" aria-modal="true" aria-labelledby="new-lab-test-title" className="my-auto w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="lab-test-modal-backdrop fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-slate-950/45 p-3 sm:p-6">
+          <div role="dialog" aria-modal="true" aria-labelledby="new-lab-test-title" className="lab-test-modal my-auto w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
             <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">
               <div>
                 <h2 id="new-lab-test-title" className="text-base font-bold text-slate-900">Add laboratory test</h2>

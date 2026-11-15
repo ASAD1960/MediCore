@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   useMutation,
   useQuery,
@@ -187,7 +187,7 @@ function StatusBadge({ status }: { status: InvoiceStatus }) {
   };
 
   return (
-    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${styles[status]}`}>
+    <span className={`mc-status-badge billing-status inline-flex rounded-full px-3 py-1 text-xs font-semibold ${styles[status]}`}>
       {statusLabel(status)}
     </span>
   );
@@ -205,8 +205,8 @@ function Modal({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl">
+    <div className="billing-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
+      <div className="billing-modal-panel max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl">
         <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
           <div>
             <h2 className="text-lg font-bold text-slate-900">{title}</h2>
@@ -483,7 +483,7 @@ export default function BillingPage() {
   }
 
   return (
-    <div className="space-y-6 pb-10">
+    <div className="billing-enterprise space-y-6 pb-10">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-teal-700">
@@ -518,7 +518,7 @@ export default function BillingPage() {
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="billing-overview grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <SummaryCard
           label="Invoices shown"
           value={String(totals.count)}
@@ -546,7 +546,7 @@ export default function BillingPage() {
         />
       </div>
 
-      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <section className="billing-register overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="flex flex-col gap-4 border-b border-slate-100 p-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="font-bold text-slate-900">Invoices</h2>
@@ -619,7 +619,7 @@ export default function BillingPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-left text-sm">
+            <table className="billing-invoice-table w-full min-w-[900px] text-left text-sm">
               <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-5 py-4 font-semibold">Invoice</th>
@@ -807,7 +807,7 @@ export default function BillingPage() {
 
                 <div className="space-y-3">
                   {(selectedInvoice.payments ?? []).map((payment) => (
-                    <div key={payment.id} className="rounded-xl border border-slate-200 p-4">
+                    <div key={payment.id} className="billing-payment-card rounded-xl border border-slate-200 p-4">
                       <div className="flex flex-wrap items-start justify-between gap-2">
                         <div>
                           <p className="font-semibold text-slate-800">
@@ -1009,7 +1009,7 @@ export default function BillingPage() {
 
               <div className="space-y-3">
                 {items.map((item, index) => (
-                  <div key={index} className="rounded-xl border border-slate-200 p-3">
+                  <div key={index} className="billing-draft-item rounded-xl border border-slate-200 p-3">
                     <div className="mb-3 flex items-center justify-between">
                       <p className="text-xs font-semibold text-slate-500">
                         Item {index + 1}
@@ -1309,7 +1309,7 @@ function SummaryCard({
   accent?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="billing-summary-card rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between">
         <p className="text-sm font-medium text-slate-500">{label}</p>
         <span className={`flex h-9 w-9 items-center justify-center rounded-xl text-lg ${
@@ -1328,7 +1328,7 @@ function SummaryCard({
 
 function DetailMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-slate-50 p-3">
+    <div className="billing-detail-metric rounded-xl bg-slate-50 p-3">
       <p className="text-xs text-slate-500">{label}</p>
       <p className="mt-1 text-sm font-bold text-slate-900">{value}</p>
     </div>

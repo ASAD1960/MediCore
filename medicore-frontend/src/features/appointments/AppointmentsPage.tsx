@@ -221,7 +221,7 @@ function StatusBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${styles[status]}`}
+      className={`mc-status-badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${styles[status]}`}
     >
       <span className="h-1.5 w-1.5 rounded-full bg-current" />
       {status.replaceAll('_', ' ')}
@@ -568,7 +568,7 @@ export default function AppointmentsPage() {
     ['SCHEDULED', 'CONFIRMED'].includes(appointment.status);
 
   return (
-    <div className="space-y-6">
+    <div className="appointments-enterprise space-y-6">
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[.14em] text-teal-700">
@@ -603,7 +603,7 @@ export default function AppointmentsPage() {
         )}
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className="appointments-overview grid gap-3 sm:grid-cols-3">
         <div className="card flex items-center gap-4">
           <span className="grid h-11 w-11 place-items-center rounded-xl bg-blue-50 text-blue-700">
             <Icon name="calendar" size={21} />
@@ -690,7 +690,7 @@ export default function AppointmentsPage() {
         </div>
       )}
 
-      <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <section className="appointments-register overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="flex flex-col justify-between gap-4 border-b border-slate-100 px-5 py-5 lg:flex-row lg:items-center">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[.13em] text-teal-700">
@@ -1107,7 +1107,7 @@ export default function AppointmentsPage() {
 
       {showBooking && (
         <div
-          className="fixed inset-0 z-[70] flex justify-end bg-slate-950/40 backdrop-blur-[2px]"
+          className="appointments-booking-backdrop fixed inset-0 z-[70] flex justify-end bg-slate-950/40 backdrop-blur-[2px]"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
@@ -1116,7 +1116,7 @@ export default function AppointmentsPage() {
           }}
         >
           <section
-            className="flex h-full w-full max-w-xl flex-col overflow-hidden bg-white shadow-2xl"
+            className="appointments-booking-panel flex h-full w-full max-w-xl flex-col overflow-hidden bg-white shadow-2xl"
             role="dialog"
             aria-modal="true"
             aria-label="Create appointment"

@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api, errorMessage } from '@/lib/api';
 import { useAuth } from '@/stores/auth';
@@ -134,7 +134,7 @@ function Status({ value }: { value: PrescriptionStatus }) {
   };
 
   return (
-    <span className={`inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[.1em] ring-1 ${styles[value]}`}>
+    <span className={`mc-status-badge prescription-status inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[.1em] ring-1 ${styles[value]}`}>
       {value.toLowerCase()}
     </span>
   );
@@ -415,7 +415,7 @@ export default function PrescriptionsPage() {
   const total = list.data?.pagination?.total ?? records.length;
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-7 pb-10">
+    <div className="prescriptions-enterprise mx-auto max-w-[1500px] space-y-7 pb-10">
       <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
           <p className="mb-2 text-[10px] font-bold uppercase tracking-[.2em] text-teal-700">
@@ -441,7 +441,7 @@ export default function PrescriptionsPage() {
         )}
       </header>
 
-      <section className="grid gap-4 sm:grid-cols-3">
+      <section className="prescriptions-overview grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
           <p className="text-xs font-semibold text-slate-500">Total prescriptions</p>
           <p className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
@@ -481,7 +481,7 @@ export default function PrescriptionsPage() {
       )}
 
       {(creating || selectedId) && (
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <section className="prescriptions-workspace overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="flex flex-col justify-between gap-3 border-b border-slate-100 bg-[#fbfcfa] px-6 py-5 sm:flex-row sm:items-center">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[.18em] text-teal-700">
@@ -606,7 +606,7 @@ export default function PrescriptionsPage() {
                     {form.items.map((item, index) => (
                       <div
                         key={index}
-                        className="rounded-xl border border-slate-200 bg-[#fdfefd] p-4 sm:p-5"
+                        className="prescription-medication-card rounded-xl border border-slate-200 bg-[#fdfefd] p-4 sm:p-5"
                       >
                         <div className="mb-4 flex items-center justify-between">
                           <p className="text-xs font-extrabold text-slate-700">
@@ -735,7 +735,7 @@ export default function PrescriptionsPage() {
                   </p>
                 ) : selected ? (
                   <>
-                    <div className="grid gap-4 rounded-xl bg-slate-50 p-5 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="prescription-detail-summary grid gap-4 rounded-xl bg-slate-50 p-5 sm:grid-cols-2 lg:grid-cols-4">
                       <div>
                         <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
                           Patient
@@ -877,7 +877,7 @@ export default function PrescriptionsPage() {
         </section>
       )}
 
-      <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+      <section className="prescriptions-register overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
         <div className="flex flex-col justify-between gap-4 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:px-6">
           <div>
             <h2 className="font-display text-base font-extrabold text-slate-900">

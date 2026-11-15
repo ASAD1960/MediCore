@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/stores/auth';
 
@@ -248,7 +248,62 @@ const PAGE_TITLES: Record<string, string> = {
 export default function DashboardLayout() {
   const { me, logout, can } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const sidebarRef = useRef<HTMLElement | null>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const location = useLocation();
+
+  const closeMobileNavigation = () => {
+    setMobileOpen(false);
+    menuTriggerRef.current?.focus();
+  };
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const sidebar = sidebarRef.current;
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileOpen(false);
+        menuTriggerRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !sidebar) return;
+
+      const focusable = Array.from(
+        sidebar.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const focusIsOutside = !sidebar.contains(document.activeElement);
+
+      if (event.shiftKey && (document.activeElement === first || focusIsOutside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last || focusIsOutside)
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileOpen]);
 
   const pageTitle = PAGE_TITLES[location.pathname] ?? 'Workspace';
 
@@ -261,7 +316,6 @@ export default function DashboardLayout() {
 
   const organizationName = me?.organization?.name ?? 'MediCore';
 
-  const closeMobileNavigation = () => setMobileOpen(false);
 
   return (
     <div className="app-shell flex min-h-screen">
@@ -269,12 +323,13 @@ export default function DashboardLayout() {
         <button
           type="button"
           aria-label="Close navigation"
-          className="sidebar-backdrop lg:hidden"
+          className="sidebar-backdrop"
           onClick={closeMobileNavigation}
         />
       )}
 
       <aside
+        ref={sidebarRef}
         id="primary-sidebar"
         aria-label="Workspace navigation"
         className={`app-sidebar flex flex-col ${mobileOpen ? 'mobile-open' : ''}`}
@@ -312,8 +367,9 @@ export default function DashboardLayout() {
           </div>
 
           <button
+            ref={closeButtonRef}
             type="button"
-            className="rounded-lg p-2 text-slate-300 transition hover:bg-white/10 lg:hidden"
+            className="sidebar-mobile-control rounded-lg p-2 text-slate-300 transition hover:bg-white/10"
             onClick={closeMobileNavigation}
             aria-label="Close menu"
           >
@@ -321,7 +377,7 @@ export default function DashboardLayout() {
           </button>
         </div>
 
-        <div className="mx-3 mt-4 rounded-xl border border-white/[.09] bg-white/[.045] p-3.5">
+        <div className="shell-organization mx-3 mt-4 rounded-xl border border-white/[.09] bg-white/[.045] p-3.5">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[.09] text-teal-200">
               <Icon name="building" size={15} />
@@ -347,7 +403,7 @@ export default function DashboardLayout() {
         </div>
 
         <nav
-          className="flex-1 space-y-7 overflow-y-auto px-3 py-7"
+          className="shell-navigation flex-1 space-y-7 overflow-y-auto px-3 py-7"
           aria-label="Main navigation"
         >
           {NAV.map((group) => {
@@ -391,7 +447,7 @@ export default function DashboardLayout() {
           })}
         </nav>
 
-        <div className="shrink-0 border-t border-white/[.08] px-4 py-4">
+        <div className="shell-sidebar-footer shrink-0 border-t border-white/[.08] px-4 py-4">
           <div className="flex items-center gap-2.5 rounded-lg px-2 py-2">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-500/10 text-teal-300">
               <Icon name="shield" size={16} />
@@ -407,20 +463,21 @@ export default function DashboardLayout() {
           </div>
 
           <p className="mt-3 px-2 text-[9px] tracking-wide text-slate-500">
-            WORKSPACE EDITION <span className="px-1">Ãƒâ€šÃ‚Â·</span> VERSION 1.0
+            WORKSPACE EDITION | VERSION 1.0
           </p>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="workspace-header sticky top-0 z-30 flex h-[76px] shrink-0 items-center justify-between px-4 sm:px-6 lg:px-8">
+        <header className="workspace-header shell-topbar sticky top-0 z-30 flex h-[76px] shrink-0 items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <button
+              ref={menuTriggerRef}
               type="button"
               aria-label="Open navigation"
               aria-controls="primary-sidebar"
               aria-expanded={mobileOpen}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 lg:hidden"
+              className="sidebar-mobile-control flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
               onClick={() => setMobileOpen(true)}
             >
               <Icon name="menu" size={19} />
@@ -457,7 +514,7 @@ export default function DashboardLayout() {
 
             <span className="hidden h-8 w-px bg-slate-200 sm:block" />
 
-            <div className="hidden min-w-0 text-right sm:block">
+            <div className="shell-user-details hidden min-w-0 text-right sm:block">
               <p className="max-w-[180px] truncate text-xs font-bold text-slate-800">
                 {me?.name ?? 'User'}
               </p>
@@ -476,7 +533,7 @@ export default function DashboardLayout() {
 
             <button
               type="button"
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-transparent px-2.5 text-xs font-semibold text-slate-500 transition hover:border-slate-200 hover:bg-slate-50 hover:text-slate-800"
+              className="shell-signout inline-flex h-9 items-center gap-2 rounded-xl border border-transparent px-2.5 text-xs font-semibold text-slate-500 transition hover:border-slate-200 hover:bg-slate-50 hover:text-slate-800"
               onClick={() => void logout()}
               title="Sign out"
             >
@@ -495,7 +552,7 @@ export default function DashboardLayout() {
         <footer className="hidden border-t border-slate-200/70 bg-white/60 px-8 py-3 lg:block">
           <div className="mx-auto flex max-w-[1600px] items-center justify-between">
             <p className="text-[10px] text-slate-400">
-              MediCore <span className="px-1">Ãƒâ€šÃ‚Â·</span> Healthcare management
+              MediCore | Healthcare management
             </p>
             <p className="text-[10px] font-medium text-slate-400">
               Secure organization workspace
