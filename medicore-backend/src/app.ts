@@ -20,14 +20,14 @@ app.use(cookieParser());
 app.use(apiLimiter);
 
 // API liveness check
-app.get('/health', (_req, res) => {
+app.get(['/health', '/api/health'], (_req, res) => {
   res.status(200).json({
     status: 'ok',
   });
 });
 
 // Database readiness check
-app.get('/ready', async (_req, res) => {
+app.get(['/ready', '/api/ready'], async (_req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`;
 
