@@ -9,7 +9,8 @@
     },
     "medicore-frontend": {
       "root": "medicore-frontend",
-      "framework": "vite"
+      "framework": "vite",
+      "outputDirectory": "dist"
     }
   },
   "rewrites": [
