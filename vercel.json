@@ -3,7 +3,9 @@
   "services": {
     "medicore-backend": {
       "root": "medicore-backend",
-      "framework": "express"
+      "framework": "express",
+      "entrypoint": "src/app.ts",
+      "outputDirectory": "."
     },
     "medicore-frontend": {
       "root": "medicore-frontend",
