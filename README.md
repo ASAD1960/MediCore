@@ -1,2270 +1,998 @@
 # MediCore
-### Hospital & Clinic Management System | Healthcare Operations Platform
+### Hospital & Clinic Management System
+
+**A unified digital platform for healthcare administration, patient management, clinical workflows, laboratory operations, and financial administration.**
 
 <p align="center">
-  <strong>A unified digital platform for managing healthcare facilities, clinical workflows, patient records, laboratory operations, appointments, and financial administration.</strong>
+  <img src="https://img.shields.io/badge/Status-Active%20Development-0f766e" alt="Status">
+  <img src="https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript-3178C6" alt="Frontend">
+  <img src="https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-339933" alt="Backend">
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-4169E1" alt="Database">
+  <img src="https://img.shields.io/badge/ORM-Prisma-2D3748" alt="ORM">
+  <img src="https://img.shields.io/badge/Deployment-Vercel-black" alt="Deployment">
 </p>
 
 <p align="center">
-  <img alt="Project Status" src="https://img.shields.io/badge/Project-Active%20Development-0f766e">
-  <img alt="Backend" src="https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-339933">
-  <img alt="Frontend" src="https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript-3178C6">
-  <img alt="Database" src="https://img.shields.io/badge/Database-PostgreSQL-4169E1">
-  <img alt="ORM" src="https://img.shields.io/badge/ORM-Prisma-2D3748">
-  <img alt="Architecture" src="https://img.shields.io/badge/Architecture-Modular%20Monolith-64748b">
-  <img alt="License" src="https://img.shields.io/badge/License-Not%20Yet%20Specified-lightgrey">
+  <a href="https://medicore-snowy.vercel.app">Live Application</a> ·
+  <a href="https://github.com/ASAD1960/MediCore">GitHub Repository</a>
 </p>
 
 ---
 
-## Table of Contents
+# 1. Project Overview
 
-1. [Product Overview](#1-product-overview)
-2. [Vision and Mission](#2-vision-and-mission)
-3. [The Problem MediCore Addresses](#3-the-problem-medicore-addresses)
-4. [Product Objectives](#4-product-objectives)
-5. [Current Implementation Status](#5-current-implementation-status)
-6. [Core Features and Modules](#6-core-features-and-modules)
-7. [Healthcare Workflows](#7-healthcare-workflows)
-8. [User Roles and Permissions](#8-user-roles-and-permissions)
-9. [System Architecture](#9-system-architecture)
-10. [Technology Stack](#10-technology-stack)
-11. [Database Architecture](#11-database-architecture)
-12. [Multi-Tenant Architecture](#12-multi-tenant-architecture)
-13. [Security Architecture](#13-security-architecture)
-14. [API Documentation Overview](#14-api-documentation-overview)
-15. [Project Structure](#15-project-structure)
-16. [Prerequisites](#16-prerequisites)
-17. [Installation and Setup](#17-installation-and-setup)
-18. [Environment Configuration](#18-environment-configuration)
-19. [Database Setup](#19-database-setup)
-20. [Running the Application](#20-running-the-application)
-21. [Testing and Quality Assurance](#21-testing-and-quality-assurance)
-22. [Deployment Architecture](#22-deployment-architecture)
-23. [Production Readiness](#23-production-readiness)
-24. [Business Model and Commercial Strategy](#24-business-model-and-commercial-strategy)
-25. [Target Market and Customer Segments](#25-target-market-and-customer-segments)
-26. [Future Product Scope](#26-future-product-scope)
-27. [Product Roadmap](#27-product-roadmap)
-28. [Scalability and Technical Evolution](#28-scalability-and-technical-evolution)
-29. [Healthcare Compliance and Data Governance](#29-healthcare-compliance-and-data-governance)
-30. [Limitations and Current Boundaries](#30-limitations-and-current-boundaries)
-31. [Troubleshooting](#31-troubleshooting)
-32. [Development Guidelines](#32-development-guidelines)
-33. [Contribution Guidelines](#33-contribution-guidelines)
-34. [Intellectual Property and Licensing](#34-intellectual-property-and-licensing)
-35. [Project Information](#35-project-information)
+MediCore is a web-based Hospital and Clinic Management System designed to centralize essential healthcare administration and operational workflows.
 
----
+It provides a structured digital environment for managing patients, doctors, appointments, consultations, prescriptions, laboratory operations, billing, and organizational activities.
 
-# 1. Product Overview
+The platform follows a modular backend architecture with a separately developed React frontend and PostgreSQL database.
 
-**MediCore** is a web-based Hospital and Clinic Management System designed to centralize healthcare administration and clinical operations in one integrated software platform.
+### Primary objectives
 
-The system is intended to help healthcare organizations move away from fragmented manual processes, disconnected spreadsheets, paper-based patient records, and inefficient administrative workflows.
+- Centralize healthcare administrative operations.
+- Organize patient and doctor records.
+- Improve appointment scheduling and coordination.
+- Support structured consultation and prescription workflows.
+- Manage laboratory orders, samples, and results.
+- Maintain billing and payment records.
+- Enforce role-based access control.
+- Support organization-level data isolation.
+- Provide a foundation for future healthcare SaaS development.
 
-MediCore provides a modular foundation for managing:
+# 2. Live Application
 
-- Healthcare organizations and their operational structure.
-- Patients and patient registration.
-- Doctors and healthcare personnel.
-- Appointment scheduling and patient visits.
-- Clinical consultations.
-- Electronic prescription workflows.
-- Laboratory test catalogs and laboratory orders.
-- Laboratory sample and result processing.
-- Billing and financial transactions.
-- Operational dashboards.
-- User access control and audit logging.
-
-The application is designed around a multi-tenant architecture, allowing multiple healthcare organizations to operate within a shared software platform while maintaining organization-level data separation.
-
-MediCore follows a modular monolithic architecture, separating business domains into independent backend modules while keeping deployment and development manageable.
-
-### Product classification
-
-| Attribute | Description |
+| Resource | Link |
 |---|---|
-| Product | MediCore |
-| Category | Healthcare Management Software |
-| Product type | Web-based application |
-| Primary users | Hospitals, clinics, healthcare administrators |
-| Architecture | Multi-tenant modular monolith |
-| Backend | Node.js, Express, TypeScript |
-| Frontend | React, TypeScript, Vite |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| API style | REST |
-| Deployment model | Self-hosted or managed SaaS in future |
-| Current stage | Implemented local application with manual verification |
+| Production application | https://medicore-snowy.vercel.app |
+| GitHub repository | https://github.com/ASAD1960/MediCore |
+| Production branch | `main` |
+| Hosting platform | Vercel |
 
----
+MediCore is deployed using Vercel's multi-service configuration, with separate frontend and backend services.
 
-# 2. Vision and Mission
+The frontend uses a single-page application architecture. Client-side routes such as `/doctors` and `/patients` are handled through an `index.html` fallback.
 
-## Vision
+API requests are routed separately to the backend service through `/api`.
 
-To build an accessible, reliable, and scalable healthcare management platform that helps healthcare organizations modernize their operations and deliver more organized patient care.
+# 3. Technology Stack
 
-## Mission
+## Frontend
 
-To provide a unified digital environment that simplifies clinical administration, improves information accessibility, strengthens operational accountability, and establishes a foundation for data-driven healthcare management.
+- React 18
+- TypeScript
+- Vite
+- React Router
+- Zustand
+- TanStack Query
+- Tailwind CSS
+- Zod
+- Recharts
 
-## Long-term product direction
+## Backend
 
-MediCore aims to evolve from a clinic and hospital management application into a broader healthcare operations platform.
+- Node.js
+- Express.js
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- JWT authentication
+- Argon2 password hashing
+- Zod validation
 
-Potential future capabilities include:
+## Infrastructure and tooling
 
-- Electronic Health Records (EHR).
-- Hospital Information System (HIS).
-- Laboratory Information System (LIS).
-- Pharmacy and inventory management.
-- Inpatient and admission management.
-- Patient self-service portals.
-- Healthcare analytics.
-- Telemedicine integration.
-- Interoperability with external healthcare systems.
+- Git and GitHub
+- Vercel
+- Managed PostgreSQL
+- npm
+- Vitest
+- Supertest
 
-These are product expansion opportunities, not claims that all capabilities are currently available.
+# 4. System Architecture
 
----
+MediCore follows a modular monolithic backend architecture with a separately developed frontend.
 
-# 3. The Problem MediCore Addresses
+The frontend provides the user interface, the backend handles authentication and business logic, and PostgreSQL stores application data.
 
-Healthcare facilities often operate through disconnected administrative and clinical processes.
+## 4.1 High-level architecture
 
-Common operational challenges include:
+```mermaid
+flowchart TB
+    U["Healthcare Staff"]
+    subgraph FRONTEND["Frontend Layer"]
+        UI["React Application"]
+        ROUTER["React Router"]
+        STATE["Zustand State"]
+        QUERY["TanStack Query"]
+    end
 
-| Problem | Operational impact | MediCore direction |
-|---|---|---|
-| Paper-based patient registration | Repeated data entry and difficult retrieval | Centralized patient records |
-| Manual appointment management | Scheduling conflicts and inefficient coordination | Structured appointment workflows |
-| Fragmented clinical information | Limited visibility into patient history | Organized clinical records |
-| Manual prescriptions | Documentation and communication difficulties | Digital prescription workflow |
-| Disconnected laboratory operations | Difficult tracking of test progress | Laboratory order lifecycle |
-| Fragmented billing records | Poor financial visibility | Centralized billing workflows |
-| Uncontrolled user access | Unauthorized access risk | Role-based permissions |
-| Limited operational oversight | Difficult management decisions | Centralized dashboard and audit records |
+    subgraph INFRA["Vercel Infrastructure"]
+        VR["Vercel Routing"]
+        FE["Frontend Service"]
+        BE["Backend Service"]
+    end
 
-MediCore addresses these problems by bringing important operational functions into a single application.
+    subgraph BACKEND["Backend Application"]
+        API["Express REST API"]
+        AUTH["Authentication Middleware"]
+        RBAC["Permission & Role Checks"]
+        MODULES["Business Modules"]
+        VALIDATION["Zod Validation"]
+    end
 
----
+    subgraph DATA["Data Layer"]
+        ORM["Prisma ORM"]
+        DB[("PostgreSQL")]
+    end
 
-# 4. Product Objectives
+    U --> UI
+    UI --> ROUTER
+    ROUTER --> STATE
+    ROUTER --> QUERY
+    QUERY --> VR
+    VR --> FE
+    VR --> BE
+    BE --> API
+    API --> AUTH
+    AUTH --> RBAC
+    RBAC --> VALIDATION
+    VALIDATION --> MODULES
+    MODULES --> ORM
+    ORM --> DB
+```
 
-The primary objectives are:
+## 4.2 Architecture responsibilities
 
-1. Centralize essential healthcare operations.
-2. Provide structured patient and doctor management.
-3. Improve appointment scheduling and workflow consistency.
-4. Support digital consultations and prescription records.
-5. Organize laboratory orders, sample processing, and result verification.
-6. Support billing and payment-related operations.
-7. Apply organization-level data isolation.
-8. Enforce permission-based access to sensitive operations.
-9. Maintain an auditable operational environment.
-10. Establish a foundation for future SaaS commercialization.
+| Layer | Responsibility |
+|---|---|
+| Presentation | User interface and application navigation |
+| State management | Client-side application state |
+| Data fetching | API requests, caching, and synchronization |
+| Routing | Frontend and backend request distribution |
+| API | HTTP endpoints and request handling |
+| Authentication | Identity and session verification |
+| Authorization | Role and permission enforcement |
+| Validation | Input and business-rule validation |
+| Business logic | Healthcare operational workflows |
+| ORM | Database queries and transactions |
+| Database | Persistent organizational and clinical records |
 
----
+# 5. Complete System Working Flow
 
-# 5. Current Implementation Status
+This section explains how the different parts of MediCore work together during normal operation.
 
-MediCore contains ten implemented backend modules and ten corresponding frontend feature areas.
+## 5.1 Overall operational workflow
 
-The following table distinguishes the implemented application from planned product expansion.
+```mermaid
+flowchart TD
+    START(["Start"])
+    LOGIN["User opens MediCore"]
+    AUTH{"Authenticated?"}
+    SIGNIN["Login"]
+    VERIFY["Verify credentials and session"]
+    ORG["Resolve organization context"]
+    ACCESS["Check roles and permissions"]
+    DASH["Load dashboard"]
+    SELECT["Select application module"]
 
-| Module | Backend | Frontend | Status |
-|---|---|---|---|
-| Authentication | Implemented | Implemented | Available |
-| Dashboard | Implemented | Implemented | Available |
-| Patient Management | Implemented | Implemented | Available |
-| Doctor Management | Implemented | Implemented | Available |
-| Appointment Management | Implemented | Implemented | Available |
-| Consultations | Implemented | Implemented | Available |
-| Prescriptions | Implemented | Implemented | Available |
-| Laboratory | Implemented | Implemented | Available |
-| Billing | Implemented | Implemented | Available |
-| Audit Logs | Implemented | Implemented | Available |
+    PATIENT["Patient Management"]
+    DOCTOR["Doctor Management"]
+    APPOINTMENT["Appointment Management"]
+    CONSULT["Consultation"]
+    PRESCRIPTION["Prescription"]
+    LAB["Laboratory"]
+    BILLING["Billing"]
+    AUDIT["Audit Logs"]
 
-### Additional database capabilities
+    DB[("PostgreSQL Database")]
+    RESPONSE["Return validated results"]
+    UI["Update application interface"]
+    END(["Continue working or log out"])
 
-The Prisma schema also includes models for additional domains, including:
+    START --> LOGIN
+    LOGIN --> AUTH
+    AUTH -- No --> SIGNIN
+    SIGNIN --> VERIFY
+    VERIFY --> AUTH
+    AUTH -- Yes --> ORG
+    ORG --> ACCESS
+    ACCESS --> DASH
+    DASH --> SELECT
 
-- Organizations and branches.
-- Departments and employees.
-- Queue entries.
-- Encounters and medical records.
-- Diagnoses and allergies.
-- Medicines, batches, and stock movements.
-- Admissions, wards, and beds.
-- Notifications.
-- File attachments.
+    SELECT --> PATIENT
+    SELECT --> DOCTOR
+    SELECT --> APPOINTMENT
+    SELECT --> CONSULT
+    SELECT --> PRESCRIPTION
+    SELECT --> LAB
+    SELECT --> BILLING
+    SELECT --> AUDIT
 
-The existence of database models does not mean that corresponding complete application workflows, APIs, or frontend screens have been implemented.
+    PATIENT --> DB
+    DOCTOR --> DB
+    APPOINTMENT --> DB
+    CONSULT --> DB
+    PRESCRIPTION --> DB
+    LAB --> DB
+    BILLING --> DB
+    AUDIT --> DB
 
-These areas are part of the existing data foundation and potential future expansion.
+    DB --> RESPONSE
+    RESPONSE --> UI
+    UI --> END
+    END --> SELECT
+```
 
-### Verification status
+The diagram represents the overall application workflow. Each operation is subject to its own authorization, validation, and business rules.
 
-The development and local verification process has included:
+## 5.2 User authentication and access flow
 
-- Backend TypeScript production build.
-- Frontend TypeScript and Vite production build.
-- Backend automated workflow tests.
-- Authentication and application access checks.
-- Manual verification of the implemented application workflows.
+1. A user opens the application.
+2. The authentication interface collects login credentials.
+3. The backend validates the credentials.
+4. Password verification uses the configured password-hashing mechanism.
+5. A successful login establishes the authentication session.
+6. The backend resolves the user's organization and authorization context.
+7. Protected endpoints check authentication and permissions.
+8. The frontend displays the accessible application functionality.
 
-The last recorded backend automated test run passed **45 tests across 7 test files**.
+### Authentication sequence
 
-The user has also completed manual application checks and reported that the implemented functionality is working correctly in the local environment.
+```mermaid
+sequenceDiagram
+    actor User
+    participant UI as React Frontend
+    participant API as Express API
+    participant Auth as Auth Middleware
+    participant DB as PostgreSQL
 
-This status does not constitute an independent security audit, clinical validation, or production certification.
+    User->>UI: Submit login credentials
+    UI->>API: POST /api/v1/auth/login
+    API->>DB: Retrieve user and organization
+    DB-->>API: User record
+    API->>API: Verify password hash
 
----
+    alt Valid credentials
+        API-->>UI: Authentication response and session cookie
+        UI->>API: Request protected resource
+        API->>Auth: Validate session
+        Auth->>DB: Resolve authorization context
+        DB-->>Auth: User and organization data
+        Auth-->>API: Authorized context
+        API-->>UI: Requested data
+        UI-->>User: Display application
+    else Invalid credentials
+        API-->>UI: Authentication error
+        UI-->>User: Display login error
+    end
+```
 
-# 6. Core Features and Modules
+## 5.3 Patient management workflow
 
-## 6.1 Authentication and Access Management
+Patient management is the foundation for many healthcare workflows.
 
-Authentication provides the entry point to the MediCore application.
+```mermaid
+flowchart TD
+    A(["Patient Module"])
+    B["Open patient management"]
+    C["Search existing patient"]
+    D{"Patient exists?"}
+    E["Review existing record"]
+    F["Enter new patient details"]
+    G["Validate patient information"]
+    H{"Duplicate detected?"}
+    I["Request duplicate confirmation"]
+    J["Create patient record"]
+    K["Generate patient identifier"]
+    L["Save organization-scoped record"]
+    M["Display patient profile"]
+    N["Update or archive record"]
 
-Implemented security-related functionality includes:
+    A --> B --> C --> D
+    D -- Yes --> E --> M
+    D -- No --> F --> G --> H
+    H -- Yes --> I
+    I --> J
+    H -- No --> J
+    J --> K --> L --> M
+    M --> N
+```
 
-- User authentication.
-- Login and logout routes.
-- Current authenticated-user retrieval.
-- Password hashing using Argon2.
-- JWT-based session authentication.
-- HTTP-only authentication cookies.
-- Authentication middleware.
-- API rate limiting.
-- Permission-based route protection.
+Patient management functionality includes:
 
-Authentication routes are registered separately from the authenticated organization-specific application routes.
-
-## 6.2 Dashboard
-
-The dashboard provides an operational overview of the healthcare organization.
-
-Its backend includes date-range-aware dashboard functionality.
-
-The dashboard is intended to serve as the central entry point for administrative users and authorized staff.
-
-Potential future dashboard enhancements include:
-
-- Revenue summaries.
-- Patient registration trends.
-- Appointment statistics.
-- Laboratory workload.
-- Doctor activity.
-- Payment summaries.
-- Operational performance indicators.
-
-## 6.3 Patient Management
-
-Patient management provides structured patient registration and retrieval.
-
-Implemented capabilities include:
-
-- Patient creation.
+- Patient registration.
 - Patient retrieval.
-- Patient updates.
+- Patient record updates.
 - Patient archiving.
 - Search and pagination.
-- Duplicate patient detection.
-- Organization-scoped patient records.
-- Generated patient numbers.
+- Duplicate detection.
+- Organization-scoped records.
+- Automatically generated patient identifiers.
 
-Patient identifiers follow an organization-specific sequence, such as:
+Example identifier: `PAT-00001`.
 
-`PAT-00001`
+## 5.4 Appointment scheduling workflow
 
-Patient information can be used by appointment, consultation, laboratory, prescription, and billing workflows.
+Appointment management coordinates patients, doctors, schedules, and appointment statuses.
 
-## 6.4 Doctor Management
+```mermaid
+flowchart TD
+    A(["Appointment Request"])
+    B["Select patient"]
+    C["Select doctor"]
+    D["Choose date and time"]
+    E["Resolve organization timezone"]
+    F["Validate doctor schedule"]
+    G{"Schedule valid?"}
+    H["Check appointment overlap"]
+    I{"Conflicting appointment?"}
+    J["Reject or request another slot"]
+    K["Create appointment"]
+    L["Save using database transaction"]
+    M["Confirm appointment"]
+    N["Manage appointment status"]
+    O(["Appointment Workflow Complete"])
 
-The doctor module supports doctor-related organizational records.
+    A --> B --> C --> D --> E --> F --> G
+    G -- No --> J
+    G -- Yes --> H --> I
+    I -- Yes --> J
+    I -- No --> K --> L --> M --> N --> O
+```
 
-The application also includes doctor scheduling functionality.
+Implemented scheduling safeguards include:
 
-The scheduling foundation supports:
-
-- Doctor schedule configuration.
-- Schedule validation.
-- Organization-level scope.
-- Schedule conflict checks.
-- Protection against invalid schedule changes where active appointments would be affected.
-
-## 6.5 Appointment Management
-
-Appointment management organizes the scheduling of patient visits.
-
-Implemented backend logic includes:
-
-- Appointment creation.
-- Appointment retrieval.
-- Appointment status management.
-- Cancellation-related permissions.
-- Check-in permissions.
 - Doctor schedule validation.
-- Appointment overlap protection.
-- Timezone-aware scheduling.
-- Transaction-based conflict handling.
+- Slot-duration validation.
+- Appointment overlap checks.
+- Organization timezone handling.
+- Protection against conflicting schedule changes.
+- Transaction-based appointment creation.
 
-Appointment scheduling uses the organization's configured timezone.
+Appointment blocking statuses include:
 
-The backend includes validation for local date and time conversion, including invalid local-time cases.
+- `SCHEDULED`
+- `CONFIRMED`
+- `CHECKED_IN`
+- `WAITING`
+- `IN_CONSULTATION`
 
-Blocking appointment states include:
+## 5.5 Consultation workflow
 
-- SCHEDULED
-- CONFIRMED
-- CHECKED_IN
-- WAITING
-- IN_CONSULTATION
+A consultation connects an appointment and patient record to the clinical encounter.
 
-Serializable database transactions are used in the appointment conflict-handling workflow.
+```mermaid
+flowchart TD
+    A(["Patient Visit"])
+    B["Patient arrives"]
+    C["Find appointment"]
+    D["Check patient and appointment"]
+    E["Start consultation"]
+    F["Record clinical information"]
+    G["Record assessment and diagnosis"]
+    H{"Additional orders required?"}
+    I["Create prescription"]
+    J["Request laboratory tests"]
+    K["Save consultation"]
+    L["Complete clinical workflow"]
+    M(["Return to patient record"])
 
-## 6.6 Consultation Management
+    A --> B --> C --> D --> E --> F --> G --> H
+    H -- Prescription --> I --> K
+    H -- Laboratory --> J --> K
+    H -- Both --> I --> J --> K
+    H -- Neither --> K
+    K --> L --> M
+```
 
-Consultation management provides a structured workflow for clinical visits.
+The consultation workflow is intended to organize clinical documentation and connect the encounter with associated operational records.
 
-The application includes consultation-related backend and frontend modules.
+Clinical decisions must remain the responsibility of qualified healthcare professionals.
 
-The database supports related clinical concepts such as:
+## 5.6 Prescription workflow
 
-- Encounters.
-- Consultations.
-- Diagnoses.
-- Allergies.
-- Medical records.
+The prescription module provides a structured way to manage medication instructions associated with clinical encounters.
 
-The actual workflow and data entry capabilities should be understood from the implemented consultation screens and API, rather than assuming every possible EHR capability is already available.
+```mermaid
+flowchart TD
+    A(["Consultation"])
+    B["Clinician creates prescription"]
+    C["Enter medication details"]
+    D["Validate prescription data"]
+    E{"Valid?"}
+    F["Correct prescription information"]
+    G["Save prescription"]
+    H["Associate with patient and consultation"]
+    I["Review prescription"]
+    J(["Prescription Record"])
 
-## 6.7 Prescription Management
+    A --> B --> C --> D --> E
+    E -- No --> F --> C
+    E -- Yes --> G --> H --> I --> J
+```
 
-The prescription module supports digital prescription workflows.
+Prescription records can include medication-related information and instructions defined by the application's data model.
 
-The database includes:
+Medication administration, pharmacy dispensing, and clinical decision support should not be assumed to be implemented solely because prescription records exist.
 
-- Prescriptions.
-- Prescription items.
-- Medicines.
-- Medicine batches.
-- Stock movements.
+## 5.7 Laboratory workflow
 
-The implemented prescription application module provides the current prescription workflow.
+The laboratory module organizes test requests and the progression of laboratory orders.
 
-Advanced pharmacy inventory operations, dispensing, stock replenishment, supplier management, and purchase orders are future expansion areas unless separately implemented.
+```mermaid
+flowchart TD
+    A(["Laboratory Request"])
+    B["Create test order"]
+    C["Select laboratory tests"]
+    D["Record order"]
+    E["Collect sample"]
+    F["Mark sample collected"]
+    G["Process sample"]
+    H["Enter laboratory result"]
+    I["Verify result"]
+    J{"Verification successful?"}
+    K["Return for correction"]
+    L["Store verified result"]
+    M(["Laboratory Workflow Complete"])
 
-## 6.8 Laboratory Management
+    A --> B --> C --> D --> E --> F --> G
+    G --> H --> I --> J
+    J -- No --> K --> H
+    J -- Yes --> L --> M
+```
 
-Laboratory management is one of the core implemented modules.
-
-It supports a structured laboratory workflow involving test catalogs, orders, samples, results, and verification.
-
-### Laboratory test catalog
-
-- View laboratory tests.
-- Search tests.
-- Create test definitions.
-- Update test definitions.
-- Maintain test codes.
-- Maintain test prices.
-- Maintain reference ranges.
-- Manage record status.
-
-### Laboratory orders
-
-- Create laboratory orders for patients.
-- Select one or more laboratory tests.
-- Retrieve laboratory orders.
-- View order details.
-- Track order status.
-
-### Sample and processing workflow
-
-The supported lifecycle is:
+Supported laboratory lifecycle:
 
 `REQUESTED → SAMPLE_COLLECTED → PROCESSING → RESULT_ENTERED → VERIFIED`
 
-The schema also defines `CANCELLED` as a laboratory order status.
+Laboratory capabilities include:
 
-The current laboratory API does not expose an order cancellation endpoint.
-
-### Result management
-
-- Enter a result for an order item.
-- Record result values.
-- Record optional units.
-- Associate results with entering users.
-- Verify laboratory results.
-- Record verification identity and timestamp.
-- Prevent a user from verifying their own entered result.
-- Mark the overall order verified after all its results are verified.
-
-### Laboratory permissions
-
-- `lab.tests.view`
-- `lab.tests.manage`
-- `lab.orders.view`
-- `lab.orders.create`
-- `lab.samples.collect`
-- `lab.orders.process`
-- `lab.results.enter`
-- `lab.results.verify`
-
-## 6.9 Billing Management
-
-Billing provides a dedicated application module and backend service layer.
-
-The database includes:
-
-- Invoices.
-- Invoice items.
-- Payments.
-- Refunds.
-
-The permission system includes separate billing permissions for viewing, creating, and refund-related operations.
-
-The billing module is intended to centralize financial records associated with healthcare operations.
-
-Advanced accounting, tax reporting, insurance claims, and financial integrations remain potential expansion areas.
-
-## 6.10 Audit Logs
-
-Audit logging provides an important accountability foundation.
-
-The application includes:
-
-- An audit-log backend module.
-- An audit-log frontend screen.
-- A dedicated audit viewing permission.
-- Audit log database records.
-
-The current implementation records selected operational activities, including authentication and important patient-related operations.
-
-A complete production audit program should additionally verify coverage of every sensitive action, retention requirements, access policies, and tamper-resistance controls.
-
----
-
-# 7. Healthcare Workflows
-
-## 7.1 Patient Registration Workflow
-
-1. An authorized staff member logs into MediCore.
-2. The staff member opens patient management.
-3. Patient information is entered.
-4. The backend validates the request.
-5. Duplicate detection is performed.
-6. The patient is created within the active organization.
-7. A patient number is generated.
-8. The patient becomes available to authorized operational workflows.
-
-## 7.2 Appointment Workflow
-
-1. An authorized user selects a patient.
-2. A doctor and appointment time are selected.
-3. The backend checks doctor schedule availability.
-4. The organization timezone is applied.
-5. Appointment conflicts are checked.
-6. A valid appointment is created.
-7. The appointment progresses through its permitted status transitions.
-
-## 7.3 Consultation Workflow
-
-1. The patient arrives for the scheduled visit.
-2. Authorized staff manage the visit workflow.
-3. A consultation is created.
-4. Clinical information is recorded through the consultation module.
-5. The consultation follows its supported status transitions.
-6. Related prescription workflows can be used by authorized users.
-
-## 7.4 Prescription Workflow
-
-1. An authorized user accesses the prescription module.
-2. A prescription is associated with the relevant patient and consultation.
-3. Prescription information and items are recorded.
-4. The prescription is managed according to the supported workflow.
-
-## 7.5 Laboratory Workflow
-
-1. An authorized user creates a laboratory order.
-2. The patient and requested tests are selected.
-3. The order enters `REQUESTED`.
-4. A laboratory technician collects the sample.
-5. The order progresses to `SAMPLE_COLLECTED`.
-6. Processing begins.
-7. The order progresses to `PROCESSING`.
-8. Results are entered for individual order items.
-9. Once all results are entered, the order progresses to `RESULT_ENTERED`.
-10. Results are verified by an authorized user other than the user who entered them.
-11. Once every result has been verified, the order reaches `VERIFIED`.
-
-## 7.6 Billing Workflow
-
-1. An authorized user accesses billing.
-2. Billing records are created through the supported billing workflow.
-3. Invoice and payment records are maintained.
-4. Refund-related operations are permission-controlled.
-
-The exact financial workflow should be evaluated against the implemented billing service and its automated tests.
-
----
-
-# 8. User Roles and Permissions
-
-MediCore uses permission-based access control.
-
-The current default role definitions include the following roles:
-
-| Role | Intended responsibility |
-|---|---|
-| Organization Administrator | Overall organization administration |
-| Receptionist | Patient registration and appointment coordination |
-| Doctor | Clinical consultations and prescriptions |
-| Laboratory Technician | Laboratory sample and result operations |
-| Accountant | Billing and financial operations |
-
-### Organization Administrator
-
-The default administrator role receives all defined permissions.
-
-### Receptionist
-
-The receptionist role is designed for front-desk activities, including:
-
-- Patient viewing and registration.
-- Patient updates.
-- Doctor viewing.
-- Appointment operations.
-- Laboratory test and order viewing.
-- Laboratory order creation.
-
-### Doctor
-
-The doctor role includes permissions for:
-
-- Patient viewing.
-- Doctor viewing.
-- Appointment viewing.
-- Consultation operations.
-- Prescription operations.
-- Laboratory test and order viewing.
-- Laboratory order creation.
-
-### Laboratory Technician
-
-The laboratory technician role includes:
-
-- Laboratory test viewing.
-- Laboratory order viewing.
+- Test catalogs.
+- Test definitions and pricing.
+- Laboratory orders.
 - Sample collection.
-- Processing.
+- Processing status.
 - Result entry.
 - Result verification.
 
-### Accountant
+## 5.8 Billing workflow
 
-The accountant role includes:
+Billing manages financial records associated with healthcare services.
 
-- Patient viewing.
-- Billing viewing.
-- Billing creation.
-- Refund-related permissions.
-- Report viewing permission.
+```mermaid
+flowchart TD
+    A(["Billing Operation"])
+    B["Create invoice"]
+    C["Add invoice items"]
+    D["Calculate invoice total"]
+    E["Validate financial data"]
+    F["Save invoice"]
+    G["Record payment"]
+    H{"Payment complete?"}
+    I["Update outstanding balance"]
+    J["Update payment status"]
+    K["Record refund if applicable"]
+    L(["Billing Record Updated"])
 
-### Permission catalogue
+    A --> B --> C --> D --> E --> F --> G --> H
+    H -- No --> I --> L
+    H -- Yes --> J --> L
+    J --> K
+    K --> L
+```
 
-The current permission definitions cover:
+The billing module includes invoice and payment-related application functionality. Accounting reconciliation, payment gateway integration, and tax compliance require separate verification.
 
-- `patients.view`
-- `patients.create`
-- `patients.update`
-- `patients.archive`
-- `doctors.view`
-- `doctors.manage`
-- `appointments.view`
-- `appointments.create`
-- `appointments.cancel`
-- `appointments.check_in`
-- `consultations.view`
-- `consultations.create`
-- `consultations.finalize`
-- `prescriptions.view`
-- `prescriptions.create`
-- `billing.view`
-- `billing.create`
-- `billing.refund`
-- `lab.tests.view`
-- `lab.tests.manage`
-- `lab.orders.view`
-- `lab.orders.create`
-- `lab.samples.collect`
-- `lab.orders.process`
-- `lab.results.enter`
-- `lab.results.verify`
+# 6. Application Modules and Responsibilities
+
+| Module | Primary responsibilities |
+|---|---|
+| Authentication | Login, logout, and session authentication |
+| Dashboard | Operational overview |
+| Patients | Registration, records, search, and archiving |
+| Doctors | Doctor records and scheduling |
+| Appointments | Scheduling and status management |
+| Consultations | Clinical encounter workflows |
+| Prescriptions | Prescription records |
+| Laboratory | Test catalogs, orders, samples, and results |
+| Billing | Invoices and payment records |
+| Audit Logs | Visibility into selected operational activities |
+
+## Dashboard
+
+The dashboard provides an organizational overview of operational information.
+
+Its purpose is to give authorized users a centralized starting point for navigating healthcare activities.
+
+## Patients
+
+Manages patient registration, retrieval, updates, search, duplicate detection, and archiving.
+
+## Doctors
+
+Manages doctor records and scheduling-related functionality.
+
+## Appointments
+
+Handles appointment creation, scheduling validation, conflict prevention, and status management.
+
+## Consultations
+
+Provides the application structure for documenting clinical encounters.
+
+## Prescriptions
+
+Maintains prescription records associated with clinical workflows.
+
+## Laboratory
+
+Organizes test catalogs, laboratory orders, samples, and results.
+
+## Billing
+
+Maintains invoice and payment-related records.
+
+## Audit Logs
+
+Provides visibility into selected application activities.
+
+# 7. Data Flow and Database Architecture
+
+MediCore uses PostgreSQL with Prisma ORM.
+
+The backend validates requests, applies business rules, and accesses the database through Prisma.
+
+### Database interaction flow
+
+```mermaid
+flowchart TD
+    A["Frontend API Request"]
+    B["Express Route"]
+    C["Authentication"]
+    D["Authorization"]
+    E["Zod Validation"]
+    F["Business Logic"]
+    G["Prisma ORM"]
+    H[("PostgreSQL")]
+    I["Database Result"]
+    J["Response Serialization"]
+    K["Frontend Update"]
+
+    A --> B --> C --> D --> E --> F --> G --> H
+    H --> I --> J --> K
+```
+
+The database schema includes concepts such as:
+
+- Organizations and branches.
+- Users and employees.
+- Patients and doctors.
+- Appointments and schedules.
+- Consultations and encounters.
+- Diagnoses and allergies.
+- Prescriptions and medicines.
+- Laboratory tests, orders, and results.
+- Invoices and payments.
+- Audit records.
+- Admissions, wards, and beds.
+- Notifications and file attachments.
+
+The existence of a database model does not necessarily mean its complete user interface or operational workflow is implemented.
+
+# 8. Multi-Tenant Architecture and Security
+
+MediCore is designed to support multiple healthcare organizations within a shared application architecture.
+
+Organization-owned records are scoped using organization identifiers.
+
+Security-related implementation includes:
+
+- Password hashing with Argon2.
+- JWT-based authentication.
+- HTTP-only authentication cookies.
+- Authentication middleware.
+- Role-based and permission-based authorization.
+- API rate limiting.
+- Zod request validation.
+- Organization-scoped database operations.
+
+### Authorization workflow
+
+```mermaid
+flowchart TD
+    A["Incoming API Request"]
+    B{"Authenticated?"}
+    C["Return 401 Unauthorized"]
+    D["Resolve User Context"]
+    E["Resolve Organization"]
+    F["Check Required Permission"]
+    G{"Permission Granted?"}
+    H["Return 403 Forbidden"]
+    I["Validate Request"]
+    J["Execute Business Logic"]
+    K["Return Response"]
+
+    A --> B
+    B -- No --> C
+    B -- Yes --> D --> E --> F --> G
+    G -- No --> H
+    G -- Yes --> I --> J --> K
+```
+
+Protected backend operations must enforce authorization independently of frontend visibility.
+
+# 9. Roles and Permissions
+
+MediCore uses a permission-oriented authorization design.
+
+The defined role structure includes:
+
+- Organization Administrator.
+- Receptionist.
+- Doctor.
+- Accountant.
+
+Permission domains include:
+
+- `patients.*`
+- `doctors.*`
+- `appointments.*`
+- `consultations.*`
+- `prescriptions.*`
+- `billing.*`
 - `reports.view`
 - `users.manage`
 - `audit.view`
 
-The presence of a permission does not automatically imply that a complete corresponding application module exists.
+The exact permissions assigned to each role should be verified against the current seed and authorization configuration.
 
----
-
-# 9. System Architecture
-
-MediCore uses a modular monolithic architecture.
-
-The backend is divided into business modules, while the frontend is organized around application features.
-
-This architecture provides clear domain boundaries without introducing unnecessary microservice complexity.
-
-## High-level architecture
-
-```mermaid
-flowchart TB
-    U[Healthcare Users] --> UI[React Web Application]
-
-    UI --> API[REST API - Express]
-
-    API --> AUTH[Authentication Middleware]
-    AUTH --> TENANT[Tenant Context]
-    TENANT --> RBAC[Authorization and Permissions]
-
-    RBAC --> MODULES[Business Modules]
-
-    MODULES --> PAT[Patients]
-    MODULES --> DOC[Doctors]
-    MODULES --> APP[Appointments]
-    MODULES --> CON[Consultations]
-    MODULES --> PRE[Prescriptions]
-    MODULES --> LAB[Laboratory]
-    MODULES --> BILL[Billing]
-    MODULES --> DASH[Dashboard]
-    MODULES --> AUD[Audit Logs]
-
-    PAT --> ORM[Prisma ORM]
-    DOC --> ORM
-    APP --> ORM
-    CON --> ORM
-    PRE --> ORM
-    LAB --> ORM
-    BILL --> ORM
-    DASH --> ORM
-    AUD --> ORM
-
-    ORM --> DB[(PostgreSQL)]
-```
-
-## Architectural principles
-
-### Separation of concerns
-
-The frontend, backend, database, authentication, and authorization responsibilities are separated.
-
-### Domain-oriented modules
-
-Each backend module owns its relevant routes, business logic, and validation rules where applicable.
-
-### Centralized middleware
-
-Shared middleware handles:
-
-- Authentication.
-- Tenant context.
-- Authorization.
-- Validation.
-- Error handling.
-- Rate limiting.
-
-### Database-backed persistence
-
-Prisma provides typed access to PostgreSQL.
-
-### Versioned API
-
-The REST API is mounted under:
-
-`/api/v1`
-
-### Health monitoring
-
-The backend exposes:
-
-- `/health` — application liveness check.
-- `/ready` — database readiness check.
-
----
-
-# 10. Technology Stack
-
-## Backend
-
-| Technology | Purpose |
-|---|---|
-| Node.js | JavaScript runtime |
-| Express 4 | HTTP application framework |
-| TypeScript | Static typing |
-| Prisma 5 | ORM and database access |
-| PostgreSQL | Relational database |
-| Argon2 | Password hashing |
-| JSON Web Token | Authentication token mechanism |
-| Helmet | HTTP security headers |
-| CORS | Cross-origin request configuration |
-| Cookie Parser | Cookie handling |
-| Express Rate Limit | Request rate limiting |
-| Zod | Input validation |
-| Pino | Structured logging |
-| Vitest | Automated testing |
-| Supertest | HTTP endpoint testing |
-| tsx | TypeScript development execution |
-
-## Frontend
-
-| Technology | Purpose |
-|---|---|
-| React 18 | User interface |
-| TypeScript | Type-safe application code |
-| Vite 6 | Development server and build tooling |
-| React Router | Application navigation |
-| TanStack Query | Server-state management |
-| Zustand | Client-state management |
-| Axios | HTTP communication |
-| React Hook Form | Form management |
-| Zod | Validation |
-| Tailwind CSS | Utility-first styling |
-
-## Infrastructure
-
-| Component | Technology |
-|---|---|
-| Database | PostgreSQL |
-| Database schema | Prisma |
-| API architecture | REST |
-| Source control | Git |
-| Package management | npm |
-
----
-
-# 11. Database Architecture
-
-MediCore uses PostgreSQL as its primary relational database.
-
-Prisma provides schema management, migrations, and typed database access.
-
-The database schema is designed to support multiple healthcare organizations and a broad set of healthcare operations.
-
-## Main database domains
-
-### Organization and access management
-
-- Organization
-- Branch
-- User
-- Role
-- Permission
-- RolePermission
-- UserRole
-
-### Human resources and departments
-
-- Department
-- Employee
-- Doctor
-- DoctorSchedule
-
-### Patient and clinical records
-
-- Patient
-- Encounter
-- Consultation
-- Diagnosis
-- Allergy
-- MedicalRecord
-
-### Appointments and patient flow
-
-- Appointment
-- QueueEntry
-
-### Prescription and pharmacy data foundation
-
-- Prescription
-- PrescriptionItem
-- Medicine
-- MedicineBatch
-- StockMovement
-
-### Laboratory
-
-- LabTest
-- LabOrder
-- LabOrderItem
-- LabResult
-
-### Hospital infrastructure
-
-- Ward
-- Bed
-- Admission
-
-### Financial management
-
-- Invoice
-- InvoiceItem
-- Payment
-- Refund
-
-### Platform operations
-
-- Notification
-- AuditLog
-- FileAttachment
-
-## Database design principles
-
-- Relational data modeling.
-- Organization-specific data ownership.
-- Foreign-key relationships.
-- Unique constraints.
-- Indexed query fields.
-- Explicit workflow status enums.
-- Transactional handling of critical operations.
-- Migration-based schema evolution.
-
-### Database migrations
-
-The repository currently includes:
-
-- Initial schema migration.
-- Organization timezone migration.
-
-Migrations are stored in:
-
-`medicore-backend/prisma/migrations`
-
-The Prisma schema is located at:
-
-`medicore-backend/prisma/schema.prisma`
-
----
-
-# 12. Multi-Tenant Architecture
-
-A major architectural feature of MediCore is its multi-tenant design.
-
-The application is structured so that multiple healthcare organizations can use the same application infrastructure while maintaining separate organizational data.
-
-## Tenant resolution
-
-The authenticated user session establishes the user's organization context.
-
-The backend applies the following general request flow:
+# 10. Project Structure
 
 ```text
-Incoming Request
-      |
-      v
-Authentication
-      |
-      v
-Tenant Context Resolution
-      |
-      v
-Permission Authorization
-      |
-      v
-Input Validation
-      |
-      v
-Business Logic
-      |
-      v
-Organization-Scoped Database Operations
-      |
-      v
-Response
-```
-
-## Tenant isolation principles
-
-- Organization context is derived from the authenticated session.
-- Clients should not be trusted to select arbitrary organization IDs.
-- Tenant-specific database operations must be scoped to the active organization.
-- User permissions are evaluated before protected operations.
-- Critical data access must preserve organization boundaries.
-
-## Commercial significance
-
-This architecture provides a foundation for offering MediCore as a SaaS platform.
-
-Instead of deploying a completely separate application for every clinic, a managed deployment could host multiple organizations with controlled tenant separation.
-
-Production SaaS deployment should additionally include systematic tenant-isolation testing and an independent security review.
-
----
-
-# 13. Security Architecture
-
-Healthcare applications process sensitive personal and clinical information.
-
-Security must therefore be considered a core system requirement.
-
-## Implemented security foundations
-
-### Authentication
-
-- JWT-based authentication.
-- HTTP-only cookie-based session transport.
-- Argon2 password hashing.
-- Authentication middleware.
-- Login and logout routes.
-
-### Authorization
-
-- Permission-based route protection.
-- Role definitions.
-- User-role relationships.
-- Role-permission relationships.
-- Organization-level access context.
-
-### API protection
-
-- Helmet security headers.
-- Configurable CORS.
-- Express rate limiting.
-- JSON request size limit.
-- Request validation.
-- Centralized error handling.
-
-### Data protection foundations
-
-- Organization-scoped data access.
-- Database relationships and constraints.
-- Transaction-based critical workflows.
-- Audit log records.
-
-## Additional production security work
-
-The following items should be completed or independently verified before handling real patient information:
-
-- Full CSRF protection for cookie-authenticated operations.
-- Secure cookie configuration for production HTTPS.
-- Strong secret management and key rotation.
-- Password reset and account recovery.
-- Session revocation and expiry policy.
-- Comprehensive audit coverage.
-- PostgreSQL backup and restore testing.
-- Encryption-at-rest strategy.
-- File upload security.
-- Dependency and vulnerability scanning.
-- Security testing of tenant boundaries.
-- Centralized monitoring and incident response.
-
-Security foundations do not by themselves establish compliance with a healthcare regulation or certification.
-
----
-
-# 14. API Documentation Overview
-
-MediCore exposes a versioned REST API.
-
-**Base path:**
-
-`/api/v1`
-
-## API resource groups
-
-| Resource | Base path | Purpose |
-|---|---|---|
-| Authentication | `/auth` | Login, logout, current user |
-| Dashboard | `/dashboard` | Operational dashboard |
-| Patients | `/patients` | Patient records |
-| Doctors | `/doctors` | Doctor records and schedules |
-| Appointments | `/appointments` | Appointment workflows |
-| Consultations | `/consultations` | Clinical consultations |
-| Prescriptions | `/prescriptions` | Prescription workflows |
-| Billing | `/billing` | Financial workflows |
-| Laboratory | `/laboratory` | Tests, orders, samples, results |
-| Audit Logs | `/audit-logs` | Audit record access |
-
-The API routes are registered in:
-
-`medicore-backend/src/routes/index.ts`
-
-## API middleware sequence
-
-Authenticated application routes follow the shared middleware sequence:
-
-1. Authenticate the request.
-2. Resolve tenant context.
-3. Authorize the required permission.
-4. Validate request data.
-5. Execute the module operation.
-6. Return a structured response.
-
-## Laboratory API reference
-
-The laboratory API currently includes the following operations:
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/laboratory/tests` | List/search tests |
-| POST | `/laboratory/tests` | Create a test |
-| PATCH | `/laboratory/tests/:id` | Update a test |
-| GET | `/laboratory/orders` | List orders |
-| GET | `/laboratory/orders/:id` | Retrieve order details |
-| POST | `/laboratory/orders` | Create an order |
-| POST | `/laboratory/orders/:id/collect-sample` | Collect sample |
-| POST | `/laboratory/orders/:id/start-processing` | Start processing |
-| POST | `/laboratory/orders/:id/items/:itemId/result` | Enter result |
-| POST | `/laboratory/results/:resultId/verify` | Verify result |
-
-## Health endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/health` | Application liveness |
-| GET | `/ready` | Database readiness |
-
-## Example health response
-
-```json
-{
-  "status": "ok"
-}
-```
-
-## Example readiness response
-
-```json
-{
-  "status": "ready",
-  "database": "connected"
-}
-```
-
-The full request and response contracts are maintained in the respective module route, validation, and service files.
-
----
-
-# 15. Project Structure
-
-The repository is organized as a monorepo containing the backend and frontend applications.
-
-```text
-Medicore/
-│
-├── README.md
+MediCore/
 │
 ├── medicore-backend/
-│   │
 │   ├── prisma/
-│   │   ├── migrations/
 │   │   ├── schema.prisma
+│   │   ├── migrations/
 │   │   └── seed.ts
 │   │
 │   ├── src/
-│   │   ├── config/
-│   │   │   ├── database.ts
-│   │   │   └── environment.ts
-│   │   │
-│   │   ├── middleware/
-│   │   │   ├── authenticate.ts
-│   │   │   ├── authorize.ts
-│   │   │   ├── error-handler.ts
-│   │   │   ├── rate-limit.ts
-│   │   │   ├── tenant-context.ts
-│   │   │   └── validate.ts
-│   │   │
-│   │   ├── modules/
-│   │   │   ├── appointments/
-│   │   │   ├── audit-logs/
-│   │   │   ├── auth/
-│   │   │   ├── billing/
-│   │   │   ├── consultations/
-│   │   │   ├── dashboard/
-│   │   │   ├── doctors/
-│   │   │   ├── laboratory/
-│   │   │   ├── patients/
-│   │   │   └── prescriptions/
-│   │   │
-│   │   ├── routes/
-│   │   ├── shared/
-│   │   │   ├── constants/
-│   │   │   ├── errors/
-│   │   │   └── utils/
-│   │   │
 │   │   ├── app.ts
-│   │   └── server.ts
+│   │   ├── modules/
+│   │   ├── middleware/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── ...
 │   │
-│   ├── tests/
-│   ├── .env.example
 │   ├── package.json
 │   └── tsconfig.json
 │
-└── medicore-frontend/
-    │
-    ├── src/
-    │   ├── app/
-    │   │   ├── App.tsx
-    │   │   └── router.tsx
-    │   │
-    │   ├── components/
-    │   │   └── layout/
-    │   │
-    │   ├── features/
-    │   │   ├── appointments/
-    │   │   ├── audit-logs/
-    │   │   ├── auth/
-    │   │   ├── billing/
-    │   │   ├── consultations/
-    │   │   ├── dashboard/
-    │   │   ├── doctors/
-    │   │   ├── laboratory/
-    │   │   ├── patients/
-    │   │   └── prescriptions/
-    │   │
-    │   ├── lib/
-    │   ├── stores/
-    │   ├── main.tsx
-    │   └── styles.css
-    │
-    ├── .env.example
-    ├── package.json
-    └── vite.config.ts
+├── medicore-frontend/
+│   ├── public/
+│   │   └── favicon.svg
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── stores/
+│   │   ├── hooks/
+│   │   └── ...
+│   │
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── vercel.json
+├── .gitignore
+└── README.md
 ```
 
----
+The structure is representative; individual module and utility files may evolve as development continues.
 
-# 16. Prerequisites
+# 11. Local Installation and Development
 
-The following software is required for local development:
+## Prerequisites
 
-| Requirement | Purpose |
-|---|---|
-| Node.js | Backend and frontend runtime |
-| npm | Dependency management |
-| PostgreSQL | Relational database |
-| Git | Version control |
-| VS Code or another IDE | Development environment |
+- Node.js compatible with project dependencies.
+- npm.
+- PostgreSQL or a compatible managed PostgreSQL database.
+- Git.
 
-A modern Node.js LTS release compatible with the dependencies is recommended.
-
-PostgreSQL must be installed and running before the backend can connect to the database.
-
----
-
-# 17. Installation and Setup
-
-## Step 1: Clone the repository
+## Clone repository
 
 ```bash
 git clone https://github.com/ASAD1960/MediCore.git
-cd Medicore
+cd MediCore
 ```
 
-Replace the repository placeholder with the actual Git repository URL.
-
-## Step 2: Install backend dependencies
+## Backend setup
 
 ```bash
 cd medicore-backend
 npm install
 ```
 
-## Step 3: Configure backend environment
+Configure the backend environment variables in a local `.env` file.
 
-Copy the example environment file:
-
-```bash
-copy .env.example .env
-```
-
-Open `.env` and configure the required values.
-
-Do not commit real environment files or credentials.
-
-## Step 4: Configure PostgreSQL
-
-Create a PostgreSQL database:
-
-```sql
-CREATE DATABASE medicore_db;
-```
-
-Configure the backend database connection string in `.env`.
-
-## Step 5: Generate Prisma Client
+Generate Prisma Client:
 
 ```bash
-npm run prisma:generate
+npx prisma generate
 ```
 
-## Step 6: Apply database migrations
-
-For local development:
+Apply development migrations:
 
 ```bash
-npm run prisma:migrate
+npx prisma migrate dev
 ```
 
-This invokes the repository's Prisma development migration script.
-
-## Step 7: Seed development data
+If appropriate for your local environment:
 
 ```bash
 npm run seed
 ```
 
-The development seed creates a demo organization and administrator account.
-
-## Step 8: Install frontend dependencies
-
-Open another terminal:
+Start the backend:
 
 ```bash
-cd medicore-frontend
-npm install
-```
-
-## Step 9: Configure frontend environment
-
-```bash
-copy .env.example .env
-```
-
-Set the frontend API URL to the local backend API.
-
----
-
-# 18. Environment Configuration
-
-## Backend environment
-
-File:
-
-`medicore-backend/.env`
-
-Example structure:
-
-```env
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/medicore_db?schema=public"
-
-JWT_SECRET="REPLACE_WITH_A_LONG_RANDOM_SECRET"
-JWT_EXPIRES_IN="1d"
-
-CORS_ORIGIN="http://localhost:5173"
-
-PORT=4000
-NODE_ENV="development"
-```
-
-These are example development settings. Use secure, environment-specific values in actual deployments.
-
-| Variable | Purpose |
-|---|---|
-| DATABASE_URL | PostgreSQL connection |
-| JWT_SECRET | JWT signing secret |
-| JWT_EXPIRES_IN | Token expiration configuration |
-| CORS_ORIGIN | Allowed frontend origin |
-| PORT | Backend listening port |
-| NODE_ENV | Runtime environment |
-
-## Frontend environment
-
-File:
-
-`medicore-frontend/.env`
-
-```env
-VITE_API_URL=http://localhost:4000/api/v1
-```
-
-The frontend API URL must point to the backend API base path.
-
-### Environment security
-
-- Never commit `.env` files.
-- Never expose JWT secrets in frontend variables.
-- Do not use production database credentials in local development.
-- Use separate credentials for development, staging, and production.
-- Rotate secrets if they are accidentally exposed.
-
----
-
-# 19. Database Setup
-
-MediCore uses Prisma migrations for database schema management.
-
-## Generate Prisma Client
-
-```bash
-npm run prisma:generate
-```
-
-## Create/apply a development migration
-
-```bash
-npm run prisma:migrate
-```
-
-## Apply existing migrations in production
-
-```bash
-npx prisma migrate deploy
-```
-
-Production migrations should be applied through a controlled release process after backup and staging verification.
-
-## Seed development data
-
-```bash
-npm run seed
-```
-
-The seed script creates a development demonstration environment.
-
-### Development seed credentials
-
-The current development seed uses:
-
-```text
-Email:    admin@demo.clinic
-Password: Admin@12345
-```
-
-**Important:** These are development-only credentials. Change the password and remove or replace predictable demo credentials before any production deployment.
-
-Do not use demo seed data as real patient data.
-
----
-
-# 20. Running the Application
-
-MediCore consists of two separately executed applications.
-
-## Start backend
-
-From the backend directory:
-
-```bash
-cd medicore-backend
 npm run dev
 ```
 
-The default local backend address is:
+Default local backend address:
 
 `http://localhost:4000`
 
-Health checks:
+Health endpoints:
 
-- http://localhost:4000/health
-- http://localhost:4000/ready
+- `http://localhost:4000/health`
+- `http://localhost:4000/ready`
 
-## Start frontend
+## Frontend setup
 
-From a second terminal:
+Open a second terminal:
 
 ```bash
 cd medicore-frontend
+npm install
 npm run dev
 ```
 
-The default Vite development address is:
+Default frontend address:
 
 `http://localhost:5173`
 
-Open the frontend URL in a browser.
+## Build verification
 
-## Build backend
+Backend:
 
 ```bash
 cd medicore-backend
 npm run build
 ```
 
-## Build frontend
+Frontend:
 
 ```bash
 cd medicore-frontend
 npm run build
 ```
 
-## Run backend tests
+Run backend tests:
 
 ```bash
 cd medicore-backend
 npm test
 ```
 
----
+Run commands from their respective application directories. The repository root is not a single npm application.
 
-# 21. Testing and Quality Assurance
+# 12. Environment Configuration
 
-Testing is an important part of MediCore's development process.
+Environment variables must be configured independently for local development and production.
 
-The backend uses Vitest and Supertest for automated verification.
+## Backend configuration
 
-## Verified backend test areas
-
-The recorded test suite includes:
-
-| Test area | Coverage focus |
+| Variable | Purpose |
 |---|---|
-| Appointment overlap | Conflicting appointments |
-| Appointment timezone | Local time and scheduling rules |
-| Billing workflow | Financial workflow rules |
-| Consultation workflow | Consultation transitions |
-| Dashboard range | Date-range calculations |
-| Laboratory workflow | Laboratory lifecycle and result verification |
-| Prescription workflow | Prescription workflow rules |
+| `DATABASE_URL` | PostgreSQL connection |
+| `JWT_SECRET` | Authentication token signing |
+| `NODE_ENV` | Application environment |
+| `PORT` | Backend server port |
+| `FRONTEND_URL` | Approved frontend origin |
 
-### Last recorded backend test result
+Use the actual variable names defined in the backend configuration.
 
-| Metric | Result |
-|---|---:|
-| Test files | 7 |
-| Tests passed | 45 |
-| Tests failed | 0 |
+Never commit `.env` files or production secrets.
 
-These figures refer to the last recorded test execution, not a guarantee that every future code revision has the same result.
+## Frontend configuration
 
-## Build verification
+| Variable | Purpose |
+|---|---|
+| `VITE_API_URL` | Frontend API base URL |
+
+The production frontend uses the `/api/v1` API path through the Vercel routing configuration.
+
+# 13. Production Deployment Architecture
+
+MediCore uses a root-level `vercel.json` to configure separate frontend and backend services.
+
+### Deployment flow
+
+```mermaid
+flowchart TD
+    DEV["Developer"]
+    GIT["Git Repository - GitHub"]
+    MAIN["main Branch"]
+    VERCEL["Vercel Deployment"]
+    CONFIG["Read vercel.json"]
+    BE["Build Backend Service"]
+    FE["Build Frontend Service"]
+    CHECK{"Builds Successful?"}
+    FAIL["Deployment Failure"]
+    READY["Deployment Ready"]
+    ALIAS["Production Alias"]
+    APP["Live MediCore Application"]
+
+    DEV --> GIT --> MAIN --> VERCEL
+    VERCEL --> CONFIG
+    CONFIG --> BE
+    CONFIG --> FE
+    BE --> CHECK
+    FE --> CHECK
+    CHECK -- No --> FAIL
+    CHECK -- Yes --> READY --> ALIAS --> APP
+```
+
+### Service configuration
+
+| Service | Configuration |
+|---|---|
+| Backend | Express |
+| Backend entry point | `medicore-backend/src/app.ts` |
+| Frontend | Vite |
+| Frontend build output | `dist` |
+| Routing configuration | Root `vercel.json` |
+
+### Request routing
+
+| Request | Destination |
+|---|---|
+| `/api/*` | Backend service |
+| `/doctors` | Frontend service |
+| `/patients` | Frontend service |
+| `/appointments` | Frontend service |
+| `/consultations` | Frontend service |
+| `/` | Frontend service |
+
+The frontend service includes an SPA fallback to `/index.html`, allowing React Router to handle direct browser navigation and refreshes.
+
+### Deployment verification
+
+After deployment, verify:
+
+1. Backend and frontend builds complete.
+2. Deployment status becomes Ready.
+3. Homepage loads.
+4. Direct frontend routes return the application HTML.
+5. API health and readiness endpoints respond.
+6. Authentication works.
+7. Protected API requests enforce permissions.
+
+# 14. Testing and Quality Assurance
+
+MediCore uses automated backend tests and production build verification.
+
+Previously recorded test coverage includes:
+
+- Appointment overlap protection.
+- Appointment timezone handling.
+- Dashboard date-range calculations.
+- Billing workflow rules.
+- Consultation workflow rules.
+- Laboratory workflow rules.
+- Prescription workflow rules.
+
+The last recorded backend test execution passed 45 tests across 7 test files. This is a historical result, not a guarantee that every subsequent revision has been tested.
+
+### Build verification
 
 The project has successfully completed:
 
-- Backend TypeScript production build.
+- Backend TypeScript production compilation.
+- Prisma Client generation.
 - Frontend TypeScript compilation.
-- Vite production build.
-- Manual local application verification.
+- Vite production builds.
+- Vercel backend and frontend builds.
 
-## Recommended additional quality assurance
+### Recommended additional testing
 
-Before a commercial release, expand testing to include:
-
-- Authentication failure cases.
-- Permission boundary tests.
-- Cross-tenant access attempts.
-- Patient data validation.
-- Appointment concurrency tests.
+- Authentication and session expiry.
+- Role and permission boundaries.
+- Cross-organization data isolation.
+- Patient validation and duplicate detection.
+- Appointment concurrency.
 - Laboratory result integrity.
 - Billing transaction integrity.
-- API security testing.
-- Frontend end-to-end testing.
-- Backup and restoration testing.
-- Load and performance testing.
+- API security.
+- Frontend end-to-end workflows.
 
----
+# 15. Current Limitations and Production Readiness
 
-# 22. Deployment Architecture
+MediCore is an actively developed software project.
 
-MediCore is structured to support deployment as a web application.
+Although its main application modules and deployment infrastructure have been implemented, additional work is necessary before commercial healthcare use.
 
-A possible deployment architecture is:
+Areas requiring further review include:
 
-```mermaid
-flowchart TB
-    CLIENT[Browser / Healthcare Staff]
+- Comprehensive security assessment.
+- Cross-tenant authorization testing.
+- Database backup and restoration procedures.
+- Complete audit coverage.
+- Session and cookie security verification.
+- Monitoring and incident response.
+- Secure file and attachment handling.
+- Healthcare regulatory and privacy compliance.
+- Clinical workflow validation with qualified professionals.
 
-    CLIENT --> HTTPS[HTTPS / Reverse Proxy]
+MediCore should not be considered a certified electronic health record or a clinically validated medical system.
 
-    HTTPS --> FRONTEND[React Frontend]
-    HTTPS --> API[Node.js API]
+Real patient information should not be entered into an environment that has not been appropriately secured, tested, and approved.
 
-    API --> DB[(Managed PostgreSQL)]
+# 16. Future Development
 
-    API --> LOGS[Centralized Logs]
-    API --> MONITOR[Monitoring]
+Potential future improvements include:
 
-    DB --> BACKUP[Encrypted Backups]
-```
+- Advanced electronic health records.
+- Pharmacy and inventory management.
+- Inpatient and admission workflows.
+- Ward and bed management.
+- Patient self-service portal.
+- Notifications and reminders.
+- Advanced analytics and reporting.
+- Financial reporting and reconciliation.
+- External healthcare integrations.
+- Improved operational monitoring.
+- Expanded automated and end-to-end testing.
 
-## Suggested deployment components
+These are planned opportunities and should not be interpreted as completed functionality.
 
-| Layer | Potential deployment |
+# 17. Development Guidelines
+
+1. Preserve the existing modular architecture.
+2. Keep organization-owned data tenant-scoped.
+3. Enforce backend authorization.
+4. Validate incoming requests.
+5. Maintain database integrity.
+6. Use transactions for critical workflows.
+7. Preserve timezone-aware scheduling.
+8. Add tests for new business logic.
+9. Verify frontend and backend integration.
+10. Never commit credentials or sensitive information.
+
+# 18. Project Information
+
+| Attribute | Details |
 |---|---|
-| Frontend | Static hosting or managed frontend platform |
-| Backend | Node.js application hosting |
-| Database | Managed PostgreSQL |
-| Domain | Custom healthcare organization domain |
-| HTTPS | Managed TLS certificate |
-| Monitoring | Application and infrastructure monitoring |
-| Backups | Automated database backup service |
-| File storage | Private object storage when implemented |
-
-## Deployment environments
-
-A mature deployment process should separate:
-
-1. Local development.
-2. Testing.
-3. Staging.
-4. Production.
-
-## Production deployment considerations
-
-- Configure production environment variables.
-- Configure secure cookies and HTTPS.
-- Restrict CORS to approved domains.
-- Use a managed PostgreSQL service or hardened database host.
-- Apply migrations through a release process.
-- Configure database backups.
-- Implement backup restoration procedures.
-- Configure structured logs and monitoring.
-- Disable development seed credentials.
-- Review user permissions.
-- Perform security testing before onboarding real organizations.
-
----
-
-# 23. Production Readiness
-
-The local application being functional is an important milestone, but commercial healthcare deployment requires additional preparation.
-
-| Area | Required action |
-|---|---|
-| Authentication | Verify session expiry and revocation |
-| CSRF | Implement and test complete protection |
-| Cookies | Enforce secure production cookie settings |
-| Tenant isolation | Perform cross-organization security tests |
-| Database | Configure automated backups |
-| Recovery | Test database restoration |
-| Encryption | Review data encryption at rest and in transit |
-| Audit | Verify sensitive action coverage |
-| File handling | Implement private, secure attachment handling |
-| Monitoring | Configure error and availability monitoring |
-| Deployment | Establish staging and production environments |
-| Compliance | Obtain appropriate legal and regulatory review |
-| Clinical safety | Validate workflows with qualified healthcare professionals |
-
-MediCore should be treated as a development-stage healthcare software product until these requirements have been appropriately addressed.
-
----
-
-# 24. Business Model and Commercial Strategy
-
-MediCore has the potential to evolve into a commercial healthcare SaaS product.
-
-The proposed business model is based on providing healthcare organizations with access to a centralized management platform through recurring subscriptions.
-
-This section describes a proposed business strategy, not existing revenue, customers, or validated market demand.
-
-## 24.1 Proposed business model
-
-**Software as a Service (SaaS)**
-
-Healthcare organizations subscribe to MediCore and receive access to the platform according to their selected service plan.
-
-Potential subscription dimensions include:
-
-- Number of branches.
-- Number of staff accounts.
-- Number of doctors.
-- Available application modules.
-- Storage allocation.
-- Support level.
-- Reporting capabilities.
-
-## 24.2 Target customer segments
-
-### Small clinics
-
-Independent clinics that need:
-
-- Patient registration.
-- Doctor schedules.
-- Appointment management.
-- Consultation records.
-- Prescriptions.
-- Basic billing.
-
-### Multi-doctor clinics
-
-Clinics with several doctors and administrative employees that need:
-
-- Shared patient records.
-- Staff access management.
-- Scheduling coordination.
-- Laboratory workflows.
-- Financial visibility.
-
-### Diagnostic laboratories
-
-Laboratories that need:
-
-- Test catalog management.
-- Order tracking.
-- Sample collection workflows.
-- Result entry.
-- Result verification.
-
-### Medium-sized hospitals
-
-Hospitals that need a broader system for:
-
-- Multiple departments.
-- Doctors and staff.
-- Patient administration.
-- Laboratory operations.
-- Billing.
-- Future inpatient management.
-
-### Healthcare groups
-
-Organizations operating multiple branches that could benefit from centralized administration and organization-level data separation.
-
-## 24.3 Proposed subscription plans
-
-The following prices are illustrative planning assumptions in Pakistani rupees. They are not current market quotations or validated willingness-to-pay figures.
-
-| Plan | Illustrative monthly price | Intended customer |
-|---|---:|---|
-| Starter | PKR 4,999 | Small independent clinic |
-| Professional | PKR 9,999 | Multi-doctor clinic |
-| Business | PKR 19,999 | Larger clinic or diagnostic facility |
-| Enterprise | Custom quotation | Hospital groups and multi-branch organizations |
-
-Actual prices should be determined after customer interviews, cost modeling, competitor research, and pilot deployments.
-
-## 24.4 Proposed plan differentiation
-
-| Capability | Starter | Professional | Business | Enterprise |
-|---|---|---|---|---|
-| Patient management | Yes | Yes | Yes | Yes |
-| Doctor management | Yes | Yes | Yes | Yes |
-| Appointments | Yes | Yes | Yes | Yes |
-| Consultations | Yes | Yes | Yes | Yes |
-| Prescriptions | Yes | Yes | Yes | Yes |
-| Laboratory | Optional | Yes | Yes | Yes |
-| Billing | Basic | Yes | Yes | Yes |
-| Audit capabilities | Basic | Yes | Yes | Advanced |
-| Multiple branches | No | Limited | Yes | Yes |
-| Advanced reporting | No | Optional | Yes | Yes |
-| Dedicated support | No | Optional | Optional | Yes |
-| Custom integrations | No | No | Optional | Yes |
-
-This is a proposed commercial packaging model. The current application does not automatically enforce these subscription limits.
-
-## 24.5 Revenue streams
-
-Potential sources of revenue include:
-
-### Recurring subscriptions
-
-Monthly or annual software access fees.
-
-### Organization onboarding
-
-One-time setup, configuration, and onboarding services.
-
-### Data migration
-
-Paid migration from spreadsheets or legacy healthcare systems.
-
-### Premium support
-
-Priority technical support and service agreements.
-
-### Customization
-
-Organization-specific workflows, forms, and integrations.
-
-### Additional branches
-
-Subscription upgrades for organizations operating multiple facilities.
-
-### Integrations
-
-Paid integration services for external laboratory, accounting, payment, or healthcare systems.
-
-## 24.6 Customer acquisition strategy
-
-A practical initial strategy would be:
-
-1. Identify independent clinics and small diagnostic facilities.
-2. Interview administrators and healthcare professionals.
-3. Understand their current administrative challenges.
-4. Demonstrate MediCore using synthetic demonstration data.
-5. Offer a limited pilot to selected organizations.
-6. Collect feedback on usability and operational value.
-7. Improve onboarding and workflow reliability.
-8. Convert successful pilots into paid subscriptions.
-9. Expand through referrals and partnerships.
-
-## 24.7 Competitive positioning
-
-MediCore could position itself around:
-
-- A unified healthcare operations environment.
-- Modular feature expansion.
-- Organization-level data isolation.
-- Structured clinical and administrative workflows.
-- A browser-based user experience.
-- A potentially affordable subscription model for smaller facilities.
-
-Its actual competitive position must be established through market research and customer validation.
-
-## 24.8 Key business performance indicators
-
-Future commercial operations should monitor:
-
-| KPI | Why it matters |
-|---|---|
-| Monthly Recurring Revenue | Recurring subscription income |
-| Annual Recurring Revenue | Long-term revenue scale |
-| Customer Acquisition Cost | Cost of acquiring an organization |
-| Customer Lifetime Value | Long-term customer value |
-| Monthly Churn | Customer retention |
-| Trial-to-Paid Conversion | Sales effectiveness |
-| Active Organizations | Product adoption |
-| Support Resolution Time | Service quality |
-| Gross Margin | Commercial sustainability |
-| Infrastructure Cost per Tenant | SaaS efficiency |
-
----
-
-# 25. Target Market and Customer Segments
-
-## Initial market opportunity
-
-A practical starting market is small and medium-sized healthcare facilities that need digital operational tools but may not require a large enterprise hospital information system.
-
-Potential geographic expansion:
-
-### Phase 1: Pakistan
-
-- Independent clinics.
-- Multi-doctor practices.
-- Diagnostic laboratories.
-- Small healthcare centers.
-
-### Phase 2: Regional markets
-
-Potential markets could include other South Asian and nearby regional countries, subject to local regulatory, language, infrastructure, and market requirements.
-
-### Phase 3: International expansion
-
-Expansion into other markets would require localization, applicable privacy and healthcare compliance work, and integration with local healthcare ecosystems.
-
-## Important market considerations
-
-Healthcare software adoption requires more than technical capability.
-
-Successful commercialization depends on:
-
-- Trust.
-- Data protection.
-- Reliability.
-- Staff training.
-- Local workflows.
-- Customer support.
-- Regulatory requirements.
-- Integration with existing operations.
-- Sustainable pricing.
-
----
-
-# 26. Future Product Scope
-
-The following capabilities represent the longer-term product vision.
-
-They should not be confused with the currently implemented modules.
-
-## 26.1 Hospital Admissions Management
-
-Potential functionality:
-
-- Inpatient registration.
-- Admission records.
-- Admission and discharge workflows.
-- Bed assignment.
-- Ward management.
-- Patient transfer.
-- Discharge summaries.
-
-The current database schema contains admission, ward, and bed models.
-
-## 26.2 Queue Management
-
-Potential functionality:
-
-- Patient check-in queues.
-- Token generation.
-- Doctor-specific queues.
-- Waiting-time visibility.
-- Queue prioritization.
-- Queue display screens.
-
-A queue entry model already exists in the database schema.
-
-## 26.3 Advanced Electronic Health Records
-
-Potential functionality:
-
-- Longitudinal patient records.
-- Clinical history.
-- Diagnosis coding.
-- Allergy management.
-- Vital signs.
-- Clinical notes.
-- Attachments.
-- Clinical document generation.
-
-The database includes related clinical models, but a complete advanced EHR is a future product milestone.
-
-## 26.4 Pharmacy and Inventory Management
-
-Potential functionality:
-
-- Medicine catalog.
-- Stock management.
-- Batch tracking.
-- Expiry monitoring.
-- Purchase orders.
-- Supplier management.
-- Dispensing.
-- Stock movement history.
-- Low-stock alerts.
-
-The database already includes medicine, medicine batch, and stock movement models.
-
-## 26.5 Advanced Laboratory Information System
-
-Potential functionality:
-
-- Expanded test catalog.
-- Laboratory departments.
-- Equipment management.
-- Sample labeling.
-- Barcode support.
-- Quality control.
-- Reference range configuration.
-- Printable reports.
-- External laboratory integrations.
-
-## 26.6 Advanced Billing and Financial Management
-
-Potential functionality:
-
-- Payment gateway integration.
-- Insurance workflows.
-- Tax configuration.
-- Financial statements.
-- Revenue analytics.
-- Automated receipts.
-- Financial exports.
-- Accounting integrations.
-
-## 26.7 Patient Portal
-
-Potential functionality:
-
-- Patient registration and authentication.
-- Appointment booking.
-- Appointment history.
-- Prescription access.
-- Laboratory result access.
-- Billing statements.
-- Notifications.
-- Profile management.
-
-## 26.8 Doctor Portal
-
-Potential functionality:
-
-- Personal doctor dashboard.
-- Schedule management.
-- Patient visit history.
-- Consultation records.
-- Prescription history.
-- Laboratory result access.
-
-## 26.9 Notification System
-
-Potential functionality:
-
-- Appointment reminders.
-- Appointment confirmations.
-- Laboratory status notifications.
-- Payment reminders.
-- Internal staff notifications.
-- Email and SMS integration.
-
-The database already contains a notification model, but the complete notification delivery infrastructure remains future work.
-
-## 26.10 Reporting and Analytics
-
-Potential functionality:
-
-- Daily patient statistics.
-- Appointment utilization.
-- Revenue trends.
-- Laboratory workload.
-- Doctor productivity.
-- Department-level performance.
-- Financial summaries.
-- Exportable reports.
-
-## 26.11 Telemedicine
-
-Potential functionality:
-
-- Online consultations.
-- Video conferencing integration.
-- Remote patient follow-up.
-- Digital appointment booking.
-- Remote prescription workflows.
-
-## 26.12 AI-Assisted Healthcare Operations
-
-Potential future applications include:
-
-- Administrative document extraction.
-- Appointment demand forecasting.
-- Operational workload prediction.
-- Medical record search assistance.
-- Duplicate record detection improvements.
-- Non-diagnostic clinical documentation assistance.
-
-Any AI feature involving clinical decisions must undergo appropriate clinical validation, human oversight, privacy assessment, and regulatory review.
-
-MediCore should not present unvalidated AI outputs as medical diagnoses or treatment recommendations.
-
----
-
-# 27. Product Roadmap
-
-A suggested development roadmap is:
-
-| Phase | Focus | Expected outcome |
-|---|---|---|
-| Phase 1 | Core management platform | Existing core workflows |
-| Phase 2 | Production security and reliability | Secure deployment foundation |
-| Phase 3 | Queue and inpatient management | Broader hospital workflows |
-| Phase 4 | Pharmacy and inventory | Medication operations |
-| Phase 5 | Advanced EHR and reporting | Richer clinical information |
-| Phase 6 | Patient and doctor portals | External user access |
-| Phase 7 | Notifications and integrations | Connected healthcare operations |
-| Phase 8 | SaaS subscriptions | Commercial platform |
-| Phase 9 | Advanced analytics and AI | Data-assisted operations |
-| Phase 10 | International expansion | Localized product editions |
-
-Roadmap phases are strategic proposals, not committed release dates.
-
----
-
-# 28. Scalability and Technical Evolution
-
-The current modular monolithic architecture is a deliberate starting point.
-
-It provides domain separation while avoiding the operational overhead of distributed services.
-
-## Current scalability foundations
-
-- Modular backend domains.
-- PostgreSQL relational database.
-- Prisma data access.
-- Indexed relational data.
-- Organization-level data scoping.
-- Paginated data retrieval in relevant workflows.
-- Transaction-based critical operations.
-- Independent frontend and backend builds.
-
-## Future technical improvements
-
-### Performance
-
-- Query optimization.
-- Database connection pooling.
-- Caching.
-- Background jobs.
-- Pagination standardization.
-- Performance monitoring.
-
-### Infrastructure
-
-- Containerization with Docker.
-- CI/CD pipelines.
-- Managed PostgreSQL.
-- Automated backups.
-- Centralized observability.
-- Horizontal application scaling.
-
-### Storage
-
-- Private object storage.
-- Secure file access.
-- Document retention.
-- Backup and recovery policies.
-
-### Integration architecture
-
-- External API integrations.
-- Webhooks.
-- Interoperability standards such as HL7 and FHIR, where appropriate.
-- Payment providers.
-- SMS and email providers.
-
-### Service decomposition
-
-If scale and operational requirements justify it, individual domains could eventually be extracted into separate services.
-
-This should be driven by real scaling and team needs rather than introducing microservices prematurely.
-
----
-
-# 29. Healthcare Compliance and Data Governance
-
-Healthcare information is sensitive and requires appropriate technical, organizational, and legal safeguards.
-
-MediCore is a software development project. Its current implementation should not be interpreted as certified or compliant with a specific healthcare regulation.
-
-Before commercial deployment, the operating organization must determine the legal and regulatory requirements applicable to its jurisdiction.
-
-Potential areas of review include:
-
-- Pakistan's applicable data protection and healthcare requirements.
-- Patient consent and data access.
-- Data retention.
-- Medical record integrity.
-- Data residency.
-- Breach notification.
-- User accountability.
-- Audit trail retention.
-- Third-party processor agreements.
-- Secure data disposal.
-
-For international markets, requirements may include:
-
-- GDPR, where applicable.
-- HIPAA, where applicable to covered entities and business associates.
-- Local health information regulations.
-- Local medical software requirements.
-
-## Data governance principles
-
-The long-term platform should adopt:
-
-1. Minimum necessary access.
-2. Role-based access control.
-3. Clear organizational data ownership.
-4. Data retention policies.
-5. Documented access and correction procedures.
-6. Encryption in transit and at rest.
-7. Regular backup testing.
-8. Incident response procedures.
-9. Security assessments.
-10. Responsible handling of patient information.
-
----
-
-# 30. Limitations and Current Boundaries
-
-The following boundaries should be considered when evaluating the current version.
-
-- MediCore is currently a locally implemented and manually verified application, not an established commercial SaaS service.
-- A complete hospital inpatient workflow is not yet implemented.
-- Pharmacy inventory operations are not yet a complete application module.
-- Patient and doctor self-service portals are future capabilities.
-- Advanced analytics and reporting require further development.
-- External payment, SMS, and email integrations are not established as completed integrations.
-- AI-assisted clinical features are future possibilities, not current medical capabilities.
-- Production security hardening and compliance assessments remain necessary.
-- Subscription billing and SaaS plan enforcement have not been implemented.
-- The current laboratory API does not expose a cancellation endpoint.
-- A permission definition or database model alone does not mean that a complete user-facing workflow exists.
-
-These boundaries are important for accurate technical evaluation and responsible product positioning.
-
----
-
-# 31. Troubleshooting
-
-## Backend cannot connect to PostgreSQL
-
-Check:
-
-- PostgreSQL service is running.
-- Database `medicore_db` exists.
-- Database credentials are correct.
-- `DATABASE_URL` is configured correctly.
-- PostgreSQL is listening on the expected port.
-
-## Prisma client errors
-
-Run:
-
-```bash
-npm run prisma:generate
-```
-
-Then rebuild the backend.
-
-## Migration errors
-
-Check:
-
-- Database connection.
-- Migration history.
-- PostgreSQL permissions.
-- Schema compatibility.
-
-Do not delete migration history as a routine troubleshooting step.
-
-## Frontend cannot reach backend
-
-Check:
-
-- Backend is running.
-- `VITE_API_URL` points to the correct API base URL.
-- CORS origin matches the frontend URL.
-- The browser console and backend logs for request errors.
-
-## Login problems
-
-Check:
-
-- The development seed has been executed.
-- The correct development account is being used.
-- The backend is connected to the expected database.
-- Browser cookies are enabled.
-- Frontend and backend origins match the configured CORS and cookie settings.
-
-## Port conflicts
-
-If ports 4000 or 5173 are already in use, identify the process and adjust the development configuration appropriately.
-
----
-
-# 32. Development Guidelines
-
-MediCore follows a modular domain-oriented structure.
-
-When extending the backend:
-
-1. Identify the relevant business domain.
-2. Inspect the existing schema and service conventions.
-3. Create or update the appropriate module.
-4. Add input validation.
-5. Apply authorization to protected routes.
-6. Preserve tenant isolation.
-7. Use database transactions for critical multi-step operations.
-8. Add automated tests.
-9. Run the backend build.
-10. Verify the integration with the frontend.
-
-## Important implementation rules
-
-### Tenant isolation
-
-Every organization-owned data query must be scoped to the active organization.
-
-### Authorization
-
-Do not rely only on frontend visibility controls. Protected operations must be authorized on the backend.
-
-### Validation
-
-Validate incoming data before executing business logic.
-
-### Database integrity
-
-Use appropriate constraints, relationships, and transactions.
-
-### Workflow consistency
-
-Use explicit status transitions rather than arbitrary status updates.
-
-### Error handling
-
-Return consistent API errors and avoid exposing secrets or sensitive internal details.
-
-### Timezone handling
-
-Use the organization's configured timezone for organization-specific scheduling behavior.
-
----
-
-# 33. Contribution Guidelines
-
-Contributions should preserve the architecture and security principles of the project.
-
-A contribution should ideally include:
-
-- A clear description of the problem.
-- A focused implementation.
-- Appropriate validation.
-- Relevant tests.
-- Updated documentation.
-- No committed secrets.
-- No unnecessary changes to unrelated modules.
-
-## Suggested contribution workflow
-
-1. Fork or branch the repository.
-2. Create a focused feature branch.
-3. Implement the change.
-4. Run backend tests where relevant.
-5. Run backend and frontend production builds.
-6. Review security and tenant-isolation implications.
-7. Submit a pull request with a clear description.
-
----
-
-# 34. Intellectual Property and Licensing
-
-No open-source license is currently declared in the repository.
-
-Until a formal license is added, users should not assume that the source code is available for unrestricted redistribution, modification, or commercial use.
-
-Before public distribution or commercial licensing, the project owner should define:
-
-- Copyright ownership.
-- Software license.
-- Third-party dependency obligations.
-- Commercial usage terms.
-- Trademark and product branding.
-- Data ownership and customer agreements.
-
-Third-party libraries remain subject to their respective licenses.
-
----
-
-# 35. Project Information
-
-| Attribute | Information |
-|---|---|
-| Project name | MediCore |
-| Product category | Hospital and Clinic Management |
-| Repository structure | Backend and frontend monorepo |
-| Backend language | TypeScript |
-| Frontend language | TypeScript |
+| Project | MediCore |
+| Category | Hospital & Clinic Management |
+| Architecture | Modular monolith |
+| Frontend | React + TypeScript |
+| Backend | Node.js + Express + TypeScript |
 | Database | PostgreSQL |
 | ORM | Prisma |
 | API | REST |
-| Architecture | Modular monolith |
-| Development status | Core modules implemented |
-| Commercial status | Proposed future SaaS product |
-
-## Project mission
-
-MediCore is being developed with the objective of making healthcare operations more organized, accessible, and digitally manageable through a unified software platform.
-
-The project brings together software engineering principles, healthcare workflow modeling, database architecture, access control, and practical application development.
-
-Its long-term ambition is to become a scalable healthcare management product capable of supporting clinics, diagnostic facilities, and larger healthcare organizations.
+| Hosting | Vercel |
+| Repository | ASAD1960/MediCore |
+| Development status | Active development |
 
 ---
 
 <p align="center">
   <strong>MediCore</strong>
   <br>
-  <em>One Platform. Connected Healthcare Operations.</em>
-</p>
-
-<p align="center">
-  Built with a focus on modular architecture, operational reliability, data integrity, and responsible healthcare technology.
+  One Platform. Connected Healthcare Operations.
+  <br><br>
+  Designed and developed by <strong>Asad Yar</strong>.
 </p>
