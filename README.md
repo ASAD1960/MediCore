@@ -1,7 +1,7 @@
-# MediCore
+﻿# MediCore
 ### Hospital & Clinic Management System
 
-**A unified digital platform for healthcare administration, patient management, clinical workflows, laboratory operations, and financial administration.**
+A unified digital platform for healthcare administration, patient management, clinical workflows, laboratory operations, and financial administration.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Active%20Development-0f766e" alt="Status">
@@ -27,7 +27,7 @@ It provides a structured digital environment for managing patients, doctors, app
 
 The platform follows a modular backend architecture with a separately developed React frontend and PostgreSQL database.
 
-### Primary objectives
+### Primary Objectives
 
 - Centralize healthcare administrative operations.
 - Organize patient and doctor records.
@@ -41,39 +41,37 @@ The platform follows a modular backend architecture with a separately developed 
 
 # 2. Technology Stack
 
-The following table summarizes the technologies used across MediCore's application layers.
-
 | Category | Technology | Purpose |
 |---|---|---|
 | Frontend | React 18 | User interface |
-| Frontend language | TypeScript | Type-safe development |
-| Build tooling | Vite | Frontend development and builds |
+| Frontend Language | TypeScript | Type-safe development |
+| Build Tool | Vite | Frontend development and builds |
 | Routing | React Router | Client-side navigation |
-| State management | Zustand | Application state |
-| Data management | TanStack Query | API requests, caching, and synchronization |
+| State Management | Zustand | Application state |
+| Data Management | TanStack Query | API requests, caching, and synchronization |
 | Styling | Tailwind CSS | Interface styling |
 | Validation | Zod | Schema validation |
 | Runtime | Node.js | Backend runtime |
-| Backend framework | Express.js | REST API |
-| Backend language | TypeScript | Backend implementation |
+| Backend Framework | Express.js | REST API |
+| Backend Language | TypeScript | Backend implementation |
 | Database | PostgreSQL | Persistent data storage |
 | ORM | Prisma | Database access and migrations |
 | Authentication | JWT | Authentication |
-| Password security | Argon2 | Password hashing |
+| Password Security | Argon2 | Password hashing |
 | Testing | Vitest | Automated testing |
-| API testing | Supertest | HTTP endpoint testing |
-| Version control | Git and GitHub | Source control |
+| API Testing | Supertest | HTTP endpoint testing |
+| Version Control | Git and GitHub | Source control |
 | Deployment | Vercel | Application hosting |
-| Package management | npm | Dependency management |
+| Package Management | npm | Dependency management |
 
 # 3. Live Application
 
 | Resource | Link |
 |---|---|
-| Production application | https://medicore-snowy.vercel.app |
-| GitHub repository | https://github.com/ASAD1960/MediCore |
-| Production branch | `main` |
-| Hosting platform | Vercel |
+| Production Application | [MediCore](https://medicore-snowy.vercel.app) |
+| GitHub Repository | [ASAD1960/MediCore](https://github.com/ASAD1960/MediCore) |
+| Production Branch | `main` |
+| Hosting Platform | Vercel |
 
 MediCore is deployed using Vercel's multi-service configuration, with separate frontend and backend services.
 
@@ -241,11 +239,12 @@ MediCore follows a modular monolithic backend architecture with a separately dev
 
 The frontend provides the user interface, the backend handles authentication and business logic, and PostgreSQL stores application data.
 
-## 4.1 High-level architecture
+## 4.1 High-Level Architecture
 
 ```mermaid
 flowchart TB
     U["Healthcare Staff"]
+
     subgraph FRONTEND["Frontend Layer"]
         UI["React Application"]
         ROUTER["React Router"]
@@ -288,19 +287,19 @@ flowchart TB
     ORM --> DB
 ```
 
-## 4.2 Architecture responsibilities
+## 4.2 Architecture Responsibilities
 
 | Layer | Responsibility |
 |---|---|
 | Presentation | User interface and application navigation |
-| State management | Client-side application state |
-| Data fetching | API requests, caching, and synchronization |
+| State Management | Client-side application state |
+| Data Fetching | API requests, caching, and synchronization |
 | Routing | Frontend and backend request distribution |
 | API | HTTP endpoints and request handling |
 | Authentication | Identity and session verification |
 | Authorization | Role and permission enforcement |
 | Validation | Input and business-rule validation |
-| Business logic | Healthcare operational workflows |
+| Business Logic | Healthcare operational workflows |
 | ORM | Database queries and transactions |
 | Database | Persistent organizational and clinical records |
 
@@ -308,7 +307,7 @@ flowchart TB
 
 This section explains how the different parts of MediCore work together during normal operation.
 
-## 5.1 Overall operational workflow
+## 5.1 Overall Operational Workflow
 
 ```mermaid
 flowchart TD
@@ -372,7 +371,7 @@ flowchart TD
 
 The diagram represents the overall application workflow. Each operation is subject to its own authorization, validation, and business rules.
 
-## 5.2 User authentication and access flow
+## 5.2 User Authentication and Access Flow
 
 1. A user opens the application.
 2. The authentication interface collects login credentials.
@@ -383,7 +382,7 @@ The diagram represents the overall application workflow. Each operation is subje
 7. Protected endpoints check authentication and permissions.
 8. The frontend displays the accessible application functionality.
 
-### Authentication sequence
+### Authentication Sequence
 
 ```mermaid
 sequenceDiagram
@@ -414,7 +413,7 @@ sequenceDiagram
     end
 ```
 
-## 5.3 Patient management workflow
+## 5.3 Patient Management Workflow
 
 Patient management is the foundation for many healthcare workflows.
 
@@ -458,7 +457,7 @@ Patient management functionality includes:
 
 Example identifier: `PAT-00001`.
 
-## 5.4 Appointment scheduling workflow
+## 5.4 Appointment Scheduling Workflow
 
 Appointment management coordinates patients, doctors, schedules, and appointment statuses.
 
@@ -504,7 +503,7 @@ Appointment blocking statuses include:
 - `WAITING`
 - `IN_CONSULTATION`
 
-## 5.5 Consultation workflow
+## 5.5 Consultation Workflow
 
 A consultation connects an appointment and patient record to the clinical encounter.
 
@@ -536,7 +535,7 @@ The consultation workflow is intended to organize clinical documentation and con
 
 Clinical decisions must remain the responsibility of qualified healthcare professionals.
 
-## 5.6 Prescription workflow
+## 5.6 Prescription Workflow
 
 The prescription module provides a structured way to manage medication instructions associated with clinical encounters.
 
@@ -562,7 +561,7 @@ Prescription records can include medication-related information and instructions
 
 Medication administration, pharmacy dispensing, and clinical decision support should not be assumed to be implemented solely because prescription records exist.
 
-## 5.7 Laboratory workflow
+## 5.7 Laboratory Workflow
 
 The laboratory module organizes test requests and the progression of laboratory orders.
 
@@ -602,7 +601,7 @@ Laboratory capabilities include:
 - Result entry.
 - Result verification.
 
-## 5.8 Billing workflow
+## 5.8 Billing Workflow
 
 Billing manages financial records associated with healthcare services.
 
@@ -632,7 +631,7 @@ The billing module includes invoice and payment-related application functionalit
 
 # 6. Application Modules and Responsibilities
 
-| Module | Primary responsibilities |
+| Module | Primary Responsibilities |
 |---|---|
 | Authentication | Login, logout, and session authentication |
 | Dashboard | Operational overview |
@@ -645,41 +644,41 @@ The billing module includes invoice and payment-related application functionalit
 | Billing | Invoices and payment records |
 | Audit Logs | Visibility into selected operational activities |
 
-## Dashboard
+### Dashboard
 
 The dashboard provides an organizational overview of operational information.
 
 Its purpose is to give authorized users a centralized starting point for navigating healthcare activities.
 
-## Patients
+### Patients
 
 Manages patient registration, retrieval, updates, search, duplicate detection, and archiving.
 
-## Doctors
+### Doctors
 
 Manages doctor records and scheduling-related functionality.
 
-## Appointments
+### Appointments
 
 Handles appointment creation, scheduling validation, conflict prevention, and status management.
 
-## Consultations
+### Consultations
 
 Provides the application structure for documenting clinical encounters.
 
-## Prescriptions
+### Prescriptions
 
 Maintains prescription records associated with clinical workflows.
 
-## Laboratory
+### Laboratory
 
 Organizes test catalogs, laboratory orders, samples, and results.
 
-## Billing
+### Billing
 
 Maintains invoice and payment-related records.
 
-## Audit Logs
+### Audit Logs
 
 Provides visibility into selected application activities.
 
@@ -689,21 +688,21 @@ MediCore uses PostgreSQL with Prisma ORM.
 
 The backend validates requests, applies business rules, and accesses the database through Prisma.
 
-### Database interaction flow
+### Database Interaction Flow
 
 ```mermaid
 flowchart TD
-    A[Frontend API Request]
-    B[Express Route]
-    C[Authentication]
-    D[Authorization]
-    E[Zod Validation]
-    F[Business Logic]
-    G[Prisma ORM]
-    H[(PostgreSQL)]
-    I[Database Result]
-    J[Response Serialization]
-    K[Frontend Update]
+    A["Frontend API Request"]
+    B["Express Route"]
+    C["Authentication"]
+    D["Authorization"]
+    E["Zod Validation"]
+    F["Business Logic"]
+    G["Prisma ORM"]
+    H[("PostgreSQL")]
+    I["Database Result"]
+    J["Response Serialization"]
+    K["Frontend Update"]
 
     A --> B
     B --> C
@@ -716,6 +715,7 @@ flowchart TD
     I --> J
     J --> K
 ```
+
 The database schema includes concepts such as:
 
 - Organizations and branches.
@@ -750,7 +750,7 @@ Security-related implementation includes:
 - Zod request validation.
 - Organization-scoped database operations.
 
-### Authorization workflow
+### Authorization Workflow
 
 ```mermaid
 flowchart TD
@@ -854,14 +854,14 @@ The structure is representative; individual module and utility files may evolve 
 - PostgreSQL or a compatible managed PostgreSQL database.
 - Git.
 
-## Clone repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/ASAD1960/MediCore.git
 cd MediCore
 ```
 
-## Backend setup
+## Backend Setup
 
 ```bash
 cd medicore-backend
@@ -903,7 +903,7 @@ Health endpoints:
 - `http://localhost:4000/health`
 - `http://localhost:4000/ready`
 
-## Frontend setup
+## Frontend Setup
 
 Open a second terminal:
 
@@ -917,7 +917,7 @@ Default frontend address:
 
 `http://localhost:5173`
 
-## Build verification
+## Build Verification
 
 Backend:
 
@@ -946,7 +946,7 @@ Run commands from their respective application directories. The repository root 
 
 Environment variables must be configured independently for local development and production.
 
-## Backend configuration
+## Backend Configuration
 
 | Variable | Purpose |
 |---|---|
@@ -960,7 +960,7 @@ Use the actual variable names defined in the backend configuration.
 
 Never commit `.env` files or production secrets.
 
-## Frontend configuration
+## Frontend Configuration
 
 | Variable | Purpose |
 |---|---|
@@ -972,7 +972,7 @@ The production frontend uses the `/api/v1` API path through the Vercel routing c
 
 MediCore uses a root-level `vercel.json` to configure separate frontend and backend services.
 
-### Deployment flow
+### Deployment Flow
 
 ```mermaid
 flowchart TD
@@ -999,17 +999,17 @@ flowchart TD
     CHECK -- Yes --> READY --> ALIAS --> APP
 ```
 
-### Service configuration
+### Service Configuration
 
 | Service | Configuration |
 |---|---|
 | Backend | Express |
-| Backend entry point | `medicore-backend/src/app.ts` |
+| Backend Entry Point | `medicore-backend/src/app.ts` |
 | Frontend | Vite |
-| Frontend build output | `dist` |
-| Routing configuration | Root `vercel.json` |
+| Frontend Build Output | `dist` |
+| Routing Configuration | Root `vercel.json` |
 
-### Request routing
+### Request Routing
 
 | Request | Destination |
 |---|---|
@@ -1022,7 +1022,7 @@ flowchart TD
 
 The frontend service includes an SPA fallback to `/index.html`, allowing React Router to handle direct browser navigation and refreshes.
 
-### Deployment verification
+### Deployment Verification
 
 After deployment, verify:
 
@@ -1050,7 +1050,7 @@ Previously recorded test coverage includes:
 
 The last recorded backend test execution passed 45 tests across 7 test files. This is a historical result, not a guarantee that every subsequent revision has been tested.
 
-### Build verification
+### Build Verification
 
 The project has successfully completed:
 
@@ -1060,7 +1060,7 @@ The project has successfully completed:
 - Vite production builds.
 - Vercel backend and frontend builds.
 
-### Recommended additional testing
+### Recommended Additional Testing
 
 - Authentication and session expiry.
 - Role and permission boundaries.
@@ -1131,7 +1131,7 @@ These are planned opportunities and should not be interpreted as completed funct
 |---|---|
 | Project | MediCore |
 | Category | Hospital & Clinic Management |
-| Architecture | Modular monolith |
+| Architecture | Modular Monolith |
 | Frontend | React + TypeScript |
 | Backend | Node.js + Express + TypeScript |
 | Database | PostgreSQL |
@@ -1139,7 +1139,7 @@ These are planned opportunities and should not be interpreted as completed funct
 | API | REST |
 | Hosting | Vercel |
 | Repository | ASAD1960/MediCore |
-| Development status | Active development |
+| Development Status | Active Development |
 
 ---
 
